@@ -144,15 +144,18 @@ $findPermissions = findPermissions($_SESSION['userid']);
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Products management:</h6>
+                        <h6 class="collapse-header">Societies:</h6>
+                        <a class="collapse-item" href="societies.php">Society</a>
+                        <h6 class="collapse-header">Others:</h6>
                         <?php
                         if ($findPermissions['mass_booking'] == 1) {
                         ?>
                             <a class="collapse-item" href="products.php">Mass Booking</a>
+                            <a class="collapse-item" href="feeds.php">Feeds/Annoucements</a>
                         <?php
                         }
                         ?>
-                        <!-- <a class="collapse-item" href="fixed_price.php">SMS</a>
+                        <!-- 
                         <a class="collapse-item" href="requests.php">RDP Requests</a> -->
 
                     </div>
@@ -185,19 +188,6 @@ $findPermissions = findPermissions($_SESSION['userid']);
             </li>
 
 
-            <li class="nav-item">
-                <a class="nav-link" href="support.php?view=REQUEST">
-                    <i class="fas fa-fw fa-comments"></i>
-                    <span>Message</span></a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" href="warnings.php">
-                    <i class="fas fa-fw fa-info-circle"></i>
-                    <span>Feeds/Annoucements</span></a>
-            </li>
-
-
             <!-- Divider -->
             <hr class="sidebar-divider">
 
@@ -227,6 +217,18 @@ $findPermissions = findPermissions($_SESSION['userid']);
                     </div>
                 </div>
             </li>
+            <?php
+            if ($findPermissions['configurations'] == 1) {
+            ?>
+                <li class="nav-item">
+                    <a class="nav-link" href="sacraments.php">
+                        <i class="fas fa-fw fa-info-circle"></i>
+                        <span>Sacraments</span></a>
+                </li>
+            <?php
+            }
+
+            ?>
             <?php
 
             if ($usertype == "USER") {
@@ -330,12 +332,13 @@ $findPermissions = findPermissions($_SESSION['userid']);
 
                                 // if ($totalAlerts > 0) {
                                 ?>
-                                    <i class="fas fa-bell fa-fw" style="color:red"></i>
-                                    <span class="badge badge-danger badge-counter">0<?php //echo $totalAlerts  ?></span>
+                                <i class="fas fa-bell fa-fw" style="color:red"></i>
+                                <span class="badge badge-danger badge-counter">0<?php //echo $totalAlerts  
+                                                                                ?></span>
                                 <?php
                                 // } else {
                                 ?>
-                                    <!-- <i class="fas fa-bell fa-fw"></i>
+                                <!-- <i class="fas fa-bell fa-fw"></i>
                                     <span class="badge badge-danger badge-counter"></span> -->
                                 <?php
                                 // }
@@ -351,17 +354,18 @@ $findPermissions = findPermissions($_SESSION['userid']);
                                 // foreach ($request as $notication) {
                                 //     $supportid = $notication['support_id'];
                                 ?>
-                                    <a class="dropdown-item d-flex align-items-center" href="support_ticket.php?view=<?php echo $supportid ?>&status=1">
-                                        <div class="mr-3">
-                                            <div class="icon-circle bg-primary">
-                                                <i class="fas fa-file-alt text-white"></i>
-                                            </div>
+                                <a class="dropdown-item d-flex align-items-center" href="support_ticket.php?view=<?php echo $supportid ?>&status=1">
+                                    <div class="mr-3">
+                                        <div class="icon-circle bg-primary">
+                                            <i class="fas fa-file-alt text-white"></i>
                                         </div>
-                                        <div>
-                                            <div class="small text-gray-500"></div>
-                                            <i class='far fa-circle' style='font-size: 22px; color:yellow'></i> <?php //echo $notication['description'] ?> <span style="color: yellow">Answered</span>
-                                        </div>
-                                    </a>
+                                    </div>
+                                    <div>
+                                        <div class="small text-gray-500"></div>
+                                        <i class='far fa-circle' style='font-size: 22px; color:yellow'></i> <?php //echo $notication['description'] 
+                                                                                                            ?> <span style="color: yellow">Answered</span>
+                                    </div>
+                                </a>
                                 <?php
                                 // }
                                 ?>
@@ -376,17 +380,19 @@ $findPermissions = findPermissions($_SESSION['userid']);
                                 //             $address = "support_ticket.php?view=$supportid&status=1";
                                 //         }
                                 ?>
-                                        <a class="dropdown-item d-flex align-items-center" href="<?php //echo $address ?>">
-                                            <div class="mr-3">
-                                                <div class="icon-circle bg-primary">
-                                                    <i class="fas fa-file-alt text-white"></i>
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <div class="small text-gray-500"></div>
-                                                <i class='far fa-circle' style='font-size: 22px; color:yellow'></i> <?php //echo $notications['description'] ?>
-                                            </div>
-                                        </a>
+                                <a class="dropdown-item d-flex align-items-center" href="<?php //echo $address 
+                                                                                            ?>">
+                                    <div class="mr-3">
+                                        <div class="icon-circle bg-primary">
+                                            <i class="fas fa-file-alt text-white"></i>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="small text-gray-500"></div>
+                                        <i class='far fa-circle' style='font-size: 22px; color:yellow'></i> <?php //echo $notications['description'] 
+                                                                                                            ?>
+                                    </div>
+                                </a>
                                 <?php
                                 //     }
                                 // }
@@ -401,7 +407,8 @@ $findPermissions = findPermissions($_SESSION['userid']);
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php //echo $_SESSION['username'] ?></span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php //echo $_SESSION['username'] 
+                                                                                            ?></span>
                                 <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
                             </a>
                             <!-- Dropdown - User Information -->

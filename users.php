@@ -121,13 +121,14 @@ $randms = generateRandomString(10);
                             <tbody>
                                 <?php
                                 $finduser = findAdminUsers();
-                                foreach ($finduser as $user) {
+                                foreach ($finduser as $x => $user) {
+                                    $profile = findProfile($user['profile_id']);
                                 ?>
                                     <tr>
-                                        <td><?php //echo $user['fullname'] ?></td>
+                                        <td><?php echo $profile['first_name'] . " " . $profile['middle_name'] . " " . $profile['last_name'] ?></td>
                                         <td><?php echo $user['username']; ?></td>
-                                        <td><?php //echo $user['phone']; ?></td>
-                                        <td><?php //echo $user['email']; ?></td>
+                                        <td><?php echo $profile['phone']; ?></td>
+                                        <td><?php echo $profile['email']; ?></td>
                                         <td>
                                             <a href="user_view.php?view=<?php echo $user['id'] ?>" class="btn btn-info btn-icon-split">
                                                 <span class="icon text-white-50">
@@ -179,8 +180,8 @@ $randms = generateRandomString(10);
                             </tfoot>
                             <tbody>
                                 <?php
-                                $finduser = selectAll('users', ['usertype' => 'ADMIN', 'status' => 'CLOSED']);
-                                foreach ($finduser as $user) {
+                                // $finduser = selectAll('users', ['usertype' => 'ADMIN', 'status' => 'CLOSED']);
+                                // foreach ($finduser as $user) {
                                 ?>
                                     <tr>
                                         <td><?php echo $user['fullname'] ?></td>
@@ -198,7 +199,7 @@ $randms = generateRandomString(10);
 
                                     </tr>
                                 <?php
-                                }
+                                // }
                                 ?>
                             </tbody>
                         </table>
@@ -220,7 +221,7 @@ $randms = generateRandomString(10);
                 [50, 100, 250, 500, -1],
                 [50, 100, 250, 500, "All"]
             ],
-            "iDisplayLength": 100,
+            "iDisplayLength": 50,
         });
     });
 </script>

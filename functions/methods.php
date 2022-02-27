@@ -127,14 +127,14 @@ function findAdminUsers()
     global $connection;
     // create join function?
     // select all from users where id in (select userid from permissions)
-    $findUsers = mysqli_query($connection, "SELECT * from users where id in (SELECT userid from permissions)");
-    $users = mysqli_fetch_assoc($findUsers);
+    $findUsers = mysqli_query($connection, "SELECT * from users where id in (SELECT users_id from permissions)");
+    $users = mysqli_fetch_all($findUsers, MYSQLI_ASSOC);
     return $users;
 }
 
 function findUsers()
 {
-    $findUsers = selectAll('users');
+    $findUsers = selectAll('users', ['status' => "ACTIVE"]);
     return $findUsers;
 }
 
@@ -338,6 +338,70 @@ function findSacramentReceived($profile_id){
     return $findReceived;
 }
 
+function createSacrament($title, $description, $minimum_age, $max_receiveable){
+    global $connection;
+    $sacramentData = [
+        'tittle' => $title,
+        'description' => $description,
+        'minimum_age' => $minimum_age,
+        'max_receivable' => $max_receiveable
+    ];
+    $createSacarment = insert('sacraments', $sacramentData);
+    if (!$createSacarment) {
+        $error = mysqli_error($connection); //checking for errors
+        $output = [
+            'status' => 'Not Successful',
+            'message' => $error
+        ];
+    } else {
+        $output = [
+            'status' => 'success',
+            'id' => $createSacarment
+        ];
+    }
+    return $output;
+    
+}
+
+function updateSacrament($id, $title, $description, $minimum_age, $max_receiveable){
+    global $connection;
+    $sacramentData = [
+        'title' => $title,
+        'description' => $description,
+        'minimum_age' => $minimum_age,
+        'max_receivable' => $max_receiveable
+    ];
+    $updateSacraments = update('sacraments', $id, 'id', $sacramentData);
+    if (!$updateSacraments) {
+        $error = mysqli_error($connection); //checking for errors
+        $output = [
+            'status' => 'Not Successful',
+            'message' => $error
+        ];
+    } else {
+        $output = [
+            'status' => 'success',
+        ];
+    }
+    return $output;
+}
+
+function deleteSacrament($id){
+    global $connection;
+    $deleteSacrament = delete('sacraments', $id, 'id');
+    if (!$deleteSacrament) {
+        $error = mysqli_error($connection); //checking for errors
+        $output = [
+            'status' => 'Not Successful',
+            'message' => $error
+        ];
+    } else {
+        $output = [
+            'status' => 'success',
+        ];
+    }
+    return $output;
+}
 
 // PAYMENT BEGINS HERE
 function findPayments(){

@@ -2,11 +2,10 @@
 
 include('header.php');
 
-$digits = 7;
-$randms = str_pad(rand(0, pow(10, $digits) - 1), $digits, '0', STR_PAD_LEFT);
+$randms = generateRandomString(5);
 
-if ($findRights['product'] != 1) {
-    $_SESSION["feedback"] = "You do not have permission to manage Products!";
+if ($findPermissions['configurations'] != 1) {
+    $_SESSION["feedback"] = "You do not have permission to manage Societies!";
     $_SESSION["Lack_of_intfund_$randms"] = "10";
     // using js so as to aviod header error
 ?>
