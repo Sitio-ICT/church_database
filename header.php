@@ -39,6 +39,10 @@ $findPermissions = findPermissions($_SESSION['userid']);
     <!-- tinyMce -->
     <script src="https://cdn.tiny.cloud/1/05uzyhq8bcam7g5r97qftgykpmc0nghqqrqg1o9oeb2laxq5/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
 
+    <!-- fullcalender -->
+    <script src="fullcalender/main.js"></script>
+    <link rel="stylesheet" href="fullcalender/main.css">
+
     <!-- feedback to customer using sweet alert -->
     <?php
     $exp_error = "";
@@ -115,7 +119,7 @@ $findPermissions = findPermissions($_SESSION['userid']);
             <hr class="sidebar-divider my-0">
 
             <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
+            <li class="nav-item ">
                 <a class="nav-link" href="index.php">
                     <i class="fas fa-fw fa-tv"></i>
                     <span>Dashboard</span></a>
@@ -124,6 +128,7 @@ $findPermissions = findPermissions($_SESSION['userid']);
             <!-- Divider -->
             <hr class="sidebar-divider">
 
+            <!-- Church management begins here -->
             <!-- Heading -->
 
             <div class="sidebar-heading">
@@ -229,36 +234,43 @@ $findPermissions = findPermissions($_SESSION['userid']);
             }
 
             ?>
+            <!-- Church Management ends here -->
             <?php
 
-            if ($usertype == "USER") {
+            // if ($usertype == "USER") {
             ?>
-                <!-- Nav Item - Products -->
-                <li class="nav-item active">
-                    <a class="nav-link" href="index.php">
-                        <i class="fas fa-clipboard-list"></i>
-                        <span>Calendar</span></a>
-                </li>
-                <!-- Nav Item - Transactions -->
-                <!-- <li class="nav-item active">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Profile
+            </div>
+
+            <!-- Nav Item - Products -->
+            <li class="nav-item ">
+                <a class="nav-link" href="calender.php">
+                    <i class="fas fa-clipboard-list"></i>
+                    <span>Calendar</span></a>
+            </li>
+            <!-- Nav Item - Transactions -->
+            <li class="nav-item ">
                 <a class="nav-link" href="index.php">
                     <i class="fas fa-dollar-sign"></i>
                     <span>Transactions</span></a>
-            </li> -->
-                <!-- Nav Item - Support -->
-                <li class="nav-item active">
-                    <a class="nav-link" href="user_view.php">
-                        <i class="fas fa-fw fa-tachometer-alt"></i>
-                        <span>Profile</span></a>
-                </li>
-                <!-- Nav Item - Account -->
-                <li class="nav-item active">
-                    <a class="nav-link" href="account.php">
-                        <i class="fas fa-user"></i>
-                        <span>Orgaizations</span></a>
-                </li>
+            </li>
+            <!-- Nav Item - Account -->
+            <li class="nav-item ">
+                <a class="nav-link" href="account.php">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Orgaizations</span></a>
+            </li>
+            <!-- Nav Item - Support -->
+            <li class="nav-item ">
+                <a class="nav-link" href="client_view.php?user=<?php echo $_SESSION['userid'] ?>">
+                    <i class="fas fa-user"></i>
+                    <span>Profile</span></a>
+            </li>
             <?php
-            }
+            // }
             ?>
 
 
@@ -415,7 +427,7 @@ $findPermissions = findPermissions($_SESSION['userid']);
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                                 <a class="dropdown-item" href="profile.php">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Profile
+                                    Settings
                                 </a>
                                 <!-- <a class="dropdown-item" href="#">
                                     <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>

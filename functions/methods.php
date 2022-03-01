@@ -159,13 +159,13 @@ function findRelationships($profile_id)
 // ORGANIZATIONS BEGIN HERE
 function findOrganizations()
 {
-    $findOrganizations = selectAll('organizations');
+    $findOrganizations = selectAll('organization');
     return $findOrganizations;
 }
 
 function findOrganization($organization_id)
 {
-    $findOrganizations = selectOne('organizations', ['id' => $organization_id]);
+    $findOrganizations = selectOne('organization', ['id' => $organization_id]);
     return $findOrganizations;
 }
 
@@ -181,7 +181,7 @@ function createOrganizations($org_name, $description, $type, $meeting_days, $re_
         're_occurance' => $re_occurance
     ];
 
-    $createOrganization = insert('organizations', $organizationData);
+    $createOrganization = insert('organization', $organizationData);
     if (!$createOrganization) {
         $error = mysqli_error($connection); //checking for errors
         $output = [
@@ -209,7 +209,7 @@ function updateOrganization($id, $org_name, $description, $type, $meeting_days, 
         're_occurance' => $re_occurance
     ];
 
-    $updateOrganization = update('organizations', $id, 'id', $organizationData);
+    $updateOrganization = update('organization', $id, 'id', $organizationData);
     if (!$updateOrganization) {
         $error = mysqli_error($connection); //checking for errors
         $output = [
@@ -227,13 +227,18 @@ function updateOrganization($id, $org_name, $description, $type, $meeting_days, 
 function findOrganizationsMember($organization_id)
 {
     global $connection;
-    $findOrganizationsMember = mysqli_query($connection, "SELECT * from profile where id in (SELECT profile_id from organization_has_profile WHERE organization_id = $organization_id)");
-    $organizationMembers = mysqli_fetch_assoc($findOrganizationsMember);
+    $findOrganizationsMember = mysqli_query($connection, "SELECT * FROM profile WHERE id IN (SELECT profile_id from organization_has_profile WHERE organization_id = $organization_id)");
+    $organizationMembers = mysqli_fetch_all($findOrganizationsMember, MYSQLI_ASSOC);
     return $organizationMembers;
 }
 
 function findOrganizationJoined($profile_id){
-    $findJoined = selectAll('organization_has_profile', ['profile_id']);
+    $findJoined = selectAll('organization_has_profile', ['profile_id' => $profile_id]);
+    return $findJoined;
+}
+
+function findOrganizationJoinedMember($profile_id, $organization_id){
+    $findJoined = selectOne('organization_has_profile', ['profile_id' => $profile_id, 'organization_id' => $organization_id]);
     return $findJoined;
 }
 

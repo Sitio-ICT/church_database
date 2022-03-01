@@ -26,7 +26,7 @@ $randms = generateRandomString(10);
 
     <div class="row">
 
-        <div class="col-lg-6">
+        <div class="col-lg-4">
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
                     <h6 class="m-0 font-weight-bold text-primary">Create New User</h6>
@@ -57,16 +57,22 @@ $randms = generateRandomString(10);
                         <legend>Role and Permissions:</legend>
                         <div class="row">
                             <div class="form-group col-lg-6">
-                                User/Warnings <input type="checkbox" name="approve" value="1" disabled class="form-comtrol">
+                                User Management <input type="checkbox" name="users" value="1" class="form-comtrol">
                             </div>
                             <div class="form-group col-lg-6">
-                                Support <input type="checkbox" name="support" value="1" checked disabled class="form-comtrol">
+                                Configurations <input type="checkbox" name="config" value="1"  class="form-comtrol">
                             </div>
                             <div class="form-group col-lg-6">
-                                Transactions <input type="checkbox" name="transaction" value="1" class="form-comtrol">
+                                Feeds <input type="checkbox" name="feeds" value="1" class="form-comtrol">
                             </div>
                             <div class="form-group col-lg-6">
-                                Product <input type="checkbox" name="product" value="1" class="form-comtrol">
+                                Mass Booking <input type="checkbox" name="mass-booking" value="1" class="form-comtrol">
+                            </div>
+                            <div class="form-group col-lg-12">
+                                Transactions(Subscriptions, Donations...) <input type="checkbox" name="transaction" value="1" class="form-comtrol">
+                            </div>
+                            <div class="form-group col-lg-8">
+                                Others(Societies, ....) <input type="checkbox" name="others" value="1" class="form-comtrol">
                             </div>
                         </div>
 
@@ -89,7 +95,7 @@ $randms = generateRandomString(10);
             </div>
         </div>
         <!-- lists of users -->
-        <div class="col-lg-6">
+        <div class="col-lg-8">
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
                     <h6 class="m-0 font-weight-bold text-primary">User</h6>
@@ -130,7 +136,7 @@ $randms = generateRandomString(10);
                                         <td><?php echo $profile['phone']; ?></td>
                                         <td><?php echo $profile['email']; ?></td>
                                         <td>
-                                            <a href="user_view.php?view=<?php echo $user['id'] ?>" class="btn btn-info btn-icon-split">
+                                            <a href="client_view.php?view=<?php echo $user['id'] ?>" class="btn btn-info btn-icon-split">
                                                 <span class="icon text-white-50">
                                                     <i class="fas fa-info-circle"></i>
                                                 </span>
@@ -141,65 +147,6 @@ $randms = generateRandomString(10);
                                     </tr>
                                 <?php
                                 }
-                                ?>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-6">
-            <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Blocked Users</h6>
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-bordered" id="dataTable2" width="100%" cellspacing="0">
-
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Username</th>
-                                    <th>Phone</th>
-                                    <th>Email</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tfoot>
-
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Username</th>
-                                    <th>Phone</th>
-                                    <th>Email</th>
-                                    <th></th>
-                                </tr>
-
-                            </tfoot>
-                            <tbody>
-                                <?php
-                                // $finduser = selectAll('users', ['usertype' => 'ADMIN', 'status' => 'CLOSED']);
-                                // foreach ($finduser as $user) {
-                                ?>
-                                    <tr>
-                                        <td><?php echo $user['fullname'] ?></td>
-                                        <td><?php echo $user['username']; ?></td>
-                                        <td><?php echo $user['phone']; ?></td>
-                                        <td><?php echo $user['email']; ?></td>
-                                        <td>
-                                            <a href="user_view.php?view=<?php echo $user['id'] ?>" class="btn btn-info btn-icon-split">
-                                                <span class="icon text-white-50">
-                                                    <i class="fas fa-info-circle"></i>
-                                                </span>
-                                                <span class="text">View</span>
-                                            </a>
-                                        </td>
-
-                                    </tr>
-                                <?php
-                                // }
                                 ?>
                             </tbody>
                         </table>
