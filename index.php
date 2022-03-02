@@ -127,23 +127,23 @@ $usertype = "damad";
                     </style>
                     <div class="card-body scrolling">
                         <?php
-                        $findActivity = selectAllWithOrder('product_activity', [''], 'id', 'DESC');
-                        // $x = 0;
-                        foreach ($findActivity as $activity) {
-                            if ($activity['type'] == 1) {
-                                $color = "green";
-                            } else {
-                                $color = "red";
-                            }
+                        // $findActivity = selectAllWithOrder('product_activity', [''], 'id', 'DESC');
+                        // // $x = 0;
+                        // foreach ($findActivity as $activity) {
+                        //     if ($activity['type'] == 1) {
+                        //         $color = "green";
+                        //     } else {
+                        //         $color = "red";
+                        //     }
                         ?>
-                            <p style="color:<?php echo $color ?>">
-                                <?php echo $activity['description'] ?>
+                            <p style="color:<?php //echo $color ?>">
+                                <?php //echo $activity['description'] ?>
                             </p>
                         <?php
                             // if (++$x == 10) {
                             //     break;
                             // }
-                        }
+                        // }
                         ?>
                     </div>
                     <!-- Above display purchase and transaction data in the form of descriptions -->

@@ -125,9 +125,14 @@ function executeQuery($sql, $data = [])
         if (!empty($data)) {
             $values = array_values($data);
             $types = str_repeat('s', count($values));
-            $stmt->bind_param($types, ...$values);
+            $stmt->bind_param($types, ...$values);   
         }
-        $stmt->execute();
+        if($stmt === false){
+            $stmt = var_dump($connection->error);
+        }else{
+            $stmt->execute();
+        }
+        
     } else {
         $stmt = var_dump($connection->error);
     }
@@ -552,6 +557,57 @@ function selectOneRand($table, $conditions)
 
     $sql = $sql . " ORDER BY rand() LIMIT 1";
 
+    $stmt = executeQuery($sql, $conditions);
+    return $stmt->get_result()->fetch_assoc();
+}
+
+function selectOneLikeOR($table, $conditions = [])
+{
+    global $connection;
+    $sql = "SELECT * FROM $table";
+
+    $i = 0;
+    foreach ($conditions as $key => $value) {
+        if ($i === 0) {
+            $sql = $sql . " WHERE $key LIKE '%" . $value . "%'";
+        } else {
+            $sql = $sql . " OR $key LIKE '%" . $value . "%'";
+        }
+        $i++;
+    }
+
+    $sql = $sql . " LIMIT 1";
+    $stmt = executeQuery($sql, $conditions);
+    return $stmt->get_result()->fetch_assoc();
+}
+
+function selectOneLikeOR2($table, $conditions = [], $conditions2 = [])
+{
+    global $connection;
+    $sql = "SELECT * FROM $table";
+
+    $p = 0;
+    foreach ($conditions as $key => $value) {
+        if ($p === 0) {
+            $sql = $sql . " WHERE $key=?";
+        } else {
+            $sql = $sql . " AND $key=?";
+        }
+        $p++;
+    }
+
+    $sql = $sql . " AND (";
+    $i = 0;
+    foreach ($conditions2 as $key => $value) {
+        if ($i === 0) {
+            $sql = $sql . " $key LIKE '%" . $value . "%'";
+        } else {
+            $sql = $sql . " OR $key LIKE '%" . $value . "%'";
+        }
+        $i++;
+    }
+
+    $sql = $sql . ") ORDER BY rand() LIMIT 1";
     $stmt = executeQuery($sql, $conditions);
     return $stmt->get_result()->fetch_assoc();
 }

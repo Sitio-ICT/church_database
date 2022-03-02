@@ -1,8 +1,9 @@
 <?php
 
 include('header.php');
+$randms = generateRandomString(5);
 
-if ($findRights['transactions'] != 1) {
+if ($findPermissions['subscriptions'] != 1) {
     $_SESSION["feedback"] = "You do not have permission!";
     $_SESSION["Lack_of_intfund_$randms"] = "10";
     // using js so as to aviod header error
@@ -35,87 +36,39 @@ if ($findRights['transactions'] != 1) {
 
                             <thead>
                                 <tr>
-                                    <th>User</th>
+                                    <th>Member</th>
                                     <th>Transaction Type</th>
                                     <th>Amount</th>
                                     <th>Transaction Date</th>
                                     <th>Reference Id</th>
-                                    <th>Product</th>
                                     <th>Description</th>
                                 </tr>
                             </thead>
                             <tfoot>
 
                                 <tr>
-                                    <th>User</th>
+                                    <th>Member</th>
                                     <th>Transaction Type</th>
                                     <th>Amount</th>
                                     <th>Transaction Date</th>
                                     <th>Reference Id</th>
-                                    <th>Product</th>
                                     <th>Description</th>
                                 </tr>
 
                             </tfoot>
                             <tbody>
                                 <?php
-                                $findTransaction = selectAllWithOrder('transaction', [''], 'id', 'DESC');
+                                $findTransaction = findPayments();
                                 foreach ($findTransaction as $transaction) {
+                                    $profile = findProfile($transaction['profile_id']);
                                 ?>
                                     <tr>
-                                        <td>
-                                            <?php
-                                            $accountId = $transaction['accounts_id'];
-                                            $findAccount = selectOne('accounts',  ['id' => $accountId]);
-                                            $clientId = $findAccount['users_id'];
-                                            $findUser = selectOne('users',  ['id' => $clientId]);
-                                            echo $findUser['username'];
-                                            ?>
-                                        </td>
-                                        <td><?php echo $transaction['transaction_type'] ?></td>
+                                        <td><?php echo $profile['first_name'] . " " . $profile['middle_name'] . " " . $profile['last_name'] ?></td>
+                                        <td><?php echo $transaction['payment_type'] ?></td>
                                         <td><?php echo number_format($transaction['amount'], 2) ?></td>
                                         <th><?php echo $transaction['transaction_date'] ?></th>
-                                        <th><?php echo $transaction['reference_id'] ?></th>
-                                        <td><?php
-                                            $transactionId = $transaction['id'];
-                                            $findPurchase = selectOne('purchase',  ['transaction_id' => $transactionId]);
-                                            $productId = $findPurchase['products_id'];
-                                            if ($findPurchase['product_type'] == 'sms') {
-                                                echo "SMS";
-                                            } else {
-                                                $findProduct = selectOne('products',  ['id' => $productId]);
-                                                if ($findProduct['product_type'] != "rdp") {
-                                                    echo $findProduct['product_name'];
-                                                } else {
-                                                    echo $findProduct['product_type'];
-                                                }
-                                                if ($transaction['transaction_type'] == "REFUND") {
-                                                    $purchaseId = $transaction['purchase_id'];
-                                                    $findPurchase = selectOne('purchase',  ['id' => $purchaseId]);
-                                                    $productId = $findPurchase['products_id'];
-                                                    $findProducts = selectOne('products',  ['id' => $productId]);
-                                                    if ($findProducts['product_type'] != "rdp") {
-                                                        echo $findProducts['product_name'];
-                                                    } else {
-                                                        echo $findProducts['product_type'];
-                                                    }
-                                                }
-                                            }
-                                            ?>
-                                        </td>
-                                        <td>
-                                            <?php
-                                            if ($findPurchase['product_type'] == 'sms') {
-                                                echo "SMS number purchase";
-                                            } else {
-                                                if ($transaction['transaction_type'] == "REFUND") {
-                                                    echo $findProducts['description'];
-                                                } else {
-                                                    echo $findProduct['description'];
-                                                }
-                                            }
-                                            ?>
-                                        </td>
+                                        <th><?php echo $transaction['transaction_id'] ?></th>
+                                        <th><?php echo $transaction['description'] ?></th>
 
                                     </tr>
                                 <?php

@@ -180,8 +180,7 @@ $findPermissions = findPermissions($_SESSION['userid']);
                         if ($findPermissions['subscriptions'] == 1) {
                         ?>
                             <a class="collapse-item" href="transactions.php">All Transactions</a>
-                            <a class="collapse-item" href="transactions_approval.php">Donations</a>
-                            <a class="collapse-item" href="transactions_approval.php">Subscriptions</a>
+                            <a class="collapse-item" href="manual_payment.php">Manual Payment</a>
                         <?php
                         }
 

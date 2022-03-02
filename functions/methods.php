@@ -35,6 +35,18 @@ function findUsername($username)
     return $output;
 }
 
+function findMemeberLike($input){
+    
+    $condition2 = [
+        'first_name' => $input,
+        'last_name' => $input,
+        'middle_name' => $input,
+        'registration_no' => $input
+    ]; 
+    $findLike = selectOneLikeOR('profile', $condition2);
+    return $findLike;
+}
+
 function createUser($username, $passkey, $first_name, $last_name, $email)
 {
     global $connection;
