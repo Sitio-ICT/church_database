@@ -5,6 +5,7 @@ include('header.php');
 $clientId = $_GET["view"];
 $findUser = findUser($clientId);
 $findClient = findProfile($findUser['profile_id']);
+$profile_id = $findUser['profile_id'];
 
 
 ?>
@@ -52,7 +53,7 @@ $findClient = findProfile($findUser['profile_id']);
                             </div>
                         </div>
                         <div class="col-lg-6">
-                            
+
                             <div class="form-group">
                                 <label for="">State of origin</label>
                                 <input type="text" class="form-control form-control-user" value="<?php echo $findClient['state_of_origin'] ?>" readonly>
@@ -81,71 +82,74 @@ $findClient = findProfile($findUser['profile_id']);
                     </div>
 
 
-
-                    <div class="form-group">
-                        <label for="">Status</label>
-                        <input type="text" class="form-control form-control-user" value="<?php echo $findUser['status'] ?>" readonly>
-                    </div>
                     <?php
-                    if ($findUser['status'] == "ACTIVE") {
+                    if ($user_type == "admin") {
                     ?>
-                        <a href="functions/people/customers/ban.php?ban=<?php echo $clientId ?>" class="btn btn-danger ">Block User</a>
-                    <?php
-                    } else {
-                    ?>
-                        <a href="functions/people/customers/activate.php?active=<?php echo $clientId ?>" class="btn btn-success ">Activate</a>
-                    <?php
-                    }
-                    ?>
-                    <a href="#" class="btn btn-info " data-toggle="modal" data-target="#fund">Donate</a>
+                        <div class="form-group">
+                            <label for="">Status</label>
+                            <input type="text" class="form-control form-control-user" value="<?php echo $findUser['status'] ?>" readonly>
+                        </div>
+                        <?php
+                        if ($findUser['status'] == "ACTIVE") {
+                        ?>
+                            <a href="functions/people/customers/ban.php?ban=<?php echo $clientId ?>" class="btn btn-danger ">Block User</a>
+                        <?php
+                        } else {
+                        ?>
+                            <a href="functions/people/customers/activate.php?active=<?php echo $clientId ?>" class="btn btn-success ">Activate</a>
+                        <?php
+                        }
+                        ?>
+                        <a href="#" class="btn btn-info " data-toggle="modal" data-target="#fund">Donate</a>
 
-                    <!-- Modal -->
-                    <form action="functions/business/fund_account.php" method="post" enctype="multipart/form-data" autocomplete="off">
-                        <div class="modal fade" id="fund" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Fund Account</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-
-                                        <input type="text" value="<?php echo $clientId ?>" name="client" hidden>
-                                        <div class="form-group">
-                                            <input type="text" class="form-control form-control-user" id="principal" name="amount" placeholder="Amount($)...." required>
+                        <!-- Modal -->
+                        <form action="functions/business/fund_account.php" method="post" enctype="multipart/form-data" autocomplete="off">
+                            <div class="modal fade" id="fund" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Fund Account</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
                                         </div>
+                                        <div class="modal-body">
 
-                                        <script>
-                                            $(document).ready(function() {
-                                                $('#principal').on("change blur", function() {
-                                                    var amount = $(this).val();
-                                                    $.ajax({
-                                                        url: "functions/system/converter.php",
-                                                        method: "POST",
-                                                        data: {
-                                                            amount: amount
-                                                        },
-                                                        success: function(data) {
-                                                            $('#principal').val(data);
-                                                        }
-                                                    })
+                                            <input type="text" value="<?php echo $clientId ?>" name="client" hidden>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control form-control-user" id="principal" name="amount" placeholder="Amount($)...." required>
+                                            </div>
+
+                                            <script>
+                                                $(document).ready(function() {
+                                                    $('#principal').on("change blur", function() {
+                                                        var amount = $(this).val();
+                                                        $.ajax({
+                                                            url: "functions/system/converter.php",
+                                                            method: "POST",
+                                                            data: {
+                                                                amount: amount
+                                                            },
+                                                            success: function(data) {
+                                                                $('#principal').val(data);
+                                                            }
+                                                        })
+                                                    });
+
                                                 });
-
-                                            });
-                                        </script>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn btn-primary">Fund</button>
+                                            </script>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-primary">Fund</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </form>
-                    <!-- /modal ends here -->
-                    <!-- </form> -->
+                        </form>
+                        <!-- /modal ends here -->
+                        <!-- </form> -->
+                    <?php } ?>
 
                 </div>
             </div>
@@ -193,9 +197,9 @@ $findClient = findProfile($findUser['profile_id']);
                                     $sacrament = findSacrament($received['sacrament_id']);
                                 ?>
                                     <tr>
-                                        <td><?php echo $sacrament['title'] ?></td>
+                                        <td><?php echo $sacrament['tittle'] ?></td>
                                         <td><?php echo $sacrament['description'] ?></td>
-                                        <td><?php echo $received['minister'] ?></td>
+                                        <td><?php echo $received['ministered_by'] ?></td>
                                         <td><?php echo $received['date_received'] ?></td>
 
                                     </tr>
@@ -244,10 +248,10 @@ $findClient = findProfile($findUser['profile_id']);
                                 <?php
                                 $findSocietiesJoined = findOrganizationJoined($profile_id);
                                 foreach ($findSocietiesJoined as $society) {
-                                    $organization = findOrganizations($profile_id);
+                                    $organization = findOrganization($society['organization_id']);
                                 ?>
                                     <tr>
-                                        <td><?php echo $organization['title'] ?></td>
+                                        <td><?php echo $organization['org_name'] ?></td>
                                         <td><?php echo $society['date_joined'] ?></td>
                                         <td><?php echo $society['position'] ?></td>
                                     </tr>

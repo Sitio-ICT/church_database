@@ -155,7 +155,11 @@ function executeQuery2($sql, $data = [])
 }
 
 
-
+/**
+ * @param string $table
+ * @param array $conditions
+ * @return array|mixed|null
+ */
 function selectAll($table, $conditions = [])
 {
     global $connection;
@@ -180,6 +184,11 @@ function selectAll($table, $conditions = [])
     }
 }
 
+/**
+ * @param string $table
+ * @param $conditions
+ * @return mixed
+ */
 function selectAllOr($table, $conditions = [])
 {
     global $connection;
@@ -204,6 +213,11 @@ function selectAllOr($table, $conditions = [])
     }
 }
 
+/**
+ * @param $table
+ * @param $conditions
+ * @return mixed
+ */
 function selectAllRand($table, $conditions = [])
 {
     global $connection;
@@ -229,6 +243,11 @@ function selectAllRand($table, $conditions = [])
     }
 }
 
+/**
+ * @param $table
+ * @param array $conditions
+ * @return mixed
+ */
 function selectAllRandLimit($table, $conditions = [], $row, $range)
 {
     global $connection;

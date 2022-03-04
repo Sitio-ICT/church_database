@@ -35,71 +35,75 @@ if ($findPermissions['others'] != 1) {
                         <h6 class="m-0 font-weight-bold text-primary">Societies</h6>
                     </div>
                     <div style="float:right">
-                        <a href="#" class="btn btn-info btn-icon-split" data-toggle="modal" data-target="#bookLoan">
-                            <span class="icon text-white-50">
-                                <i class="fas fa-info-circle"></i>
-                            </span>
-                            <span class="text">New Society</span>
-                        </a>
-                        <!-- Modal -->
-                        <form action="functions/operations/create_society.php" method="post" enctype="multipart/form-data" autocomplete="off">
-                            <div class="modal fade" id="bookLoan" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Create New Society</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="form-group">
-                                                <label for="">Organisation/Society Name</label>
-                                                <input type="text" name="org_name" class="form-control" required>
+                        <?php
+                        if ($user_type == "admin") {
+                        ?>
+                            <a href="#" class="btn btn-info btn-icon-split" data-toggle="modal" data-target="#bookLoan">
+                                <span class="icon text-white-50">
+                                    <i class="fas fa-info-circle"></i>
+                                </span>
+                                <span class="text">New Society</span>
+                            </a>
+                            <!-- Modal -->
+                            <form action="functions/operations/create_society.php" method="post" enctype="multipart/form-data" autocomplete="off">
+                                <div class="modal fade" id="bookLoan" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Create New Society</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
                                             </div>
-                                            <div class="form-group">
-                                                <label for="">Description</label>
-                                                <input type="text" name="description" class="form-control">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="">Society/Organization Type</label>
-                                                <input type="text" name="org_type" class="form-control" required placeholder="Pious society, Committee etc....">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="">Meeting Days</label>
-                                                <select name="meeting_days" class="form-control" required>
-                                                    <option value="Sunday">Sunday</option>
-                                                    <option value="Monday">Monday</option>
-                                                    <option value="Tuesday">Tuesday</option>
-                                                    <option value="Wednessday">Wednessday</option>
-                                                    <option value="Thursday">Thursday</option>
-                                                    <option value="Friday">Friday</option>
-                                                    <option value="Saturday">Saturday</option>
-                                                    <option value="All Week">All Week</option>
-                                                </select>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="">Meeting Frequency</label>
-                                                <select name="re_occurence" class="form-control" required>
-                                                    <option value="Every">Every</option>
-                                                    <option value="First">First</option>
-                                                    <option value="Second">Second</option>
-                                                    <option value="Third">Third</option>
-                                                    <option value="Fourth">Fourth</option>
-                                                </select>
+                                            <div class="modal-body">
+                                                <div class="form-group">
+                                                    <label for="">Organisation/Society Name</label>
+                                                    <input type="text" name="org_name" class="form-control" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="">Description</label>
+                                                    <input type="text" name="description" class="form-control">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="">Society/Organization Type</label>
+                                                    <input type="text" name="org_type" class="form-control" required placeholder="Pious society, Committee etc....">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="">Meeting Days</label>
+                                                    <select name="meeting_days" class="form-control" required>
+                                                        <option value="Sunday">Sunday</option>
+                                                        <option value="Monday">Monday</option>
+                                                        <option value="Tuesday">Tuesday</option>
+                                                        <option value="Wednessday">Wednessday</option>
+                                                        <option value="Thursday">Thursday</option>
+                                                        <option value="Friday">Friday</option>
+                                                        <option value="Saturday">Saturday</option>
+                                                        <option value="All Week">All Week</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="">Meeting Frequency</label>
+                                                    <select name="re_occurence" class="form-control" required>
+                                                        <option value="Every">Every</option>
+                                                        <option value="First">First</option>
+                                                        <option value="Second">Second</option>
+                                                        <option value="Third">Third</option>
+                                                        <option value="Fourth">Fourth</option>
+                                                    </select>
+                                                </div>
+
                                             </div>
 
-                                        </div>
-
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                            <button type="submit" class="btn btn-primary">Create</button>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-primary">Create</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </form>
-                        <!-- /modal ends here -->
+                            </form>
+                            <!-- /modal ends here -->
+                        <?php } ?>
                     </div>
                 </div>
                 <div class="card-body">
@@ -145,7 +149,11 @@ if ($findPermissions['others'] != 1) {
                                         <td><?php echo $society['re_occurance'] ?></td>
                                         <td>
                                             <a href="society_view.php?view=<?php echo $society['id'] ?>" class="btn btn-primary">View</a>
-                                            <a href="functions/business/delete_product.php?delete=<?php echo $society['id'] ?>" class="btn btn-danger">Delete</a>
+                                            <?php
+                                            if ($user_type == "admin") {
+                                            ?>
+                                                <!-- <a href="functions/business/delete_product.php?delete=<?php //echo $society['id'] ?>" class="btn btn-danger">Delete</a> -->
+                                            <?php } ?>
                                         </td>
 
                                     </tr>

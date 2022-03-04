@@ -127,23 +127,28 @@ $usertype = "damad";
                     </style>
                     <div class="card-body scrolling">
                         <?php
-                        // $findActivity = selectAllWithOrder('product_activity', [''], 'id', 'DESC');
-                        // // $x = 0;
-                        // foreach ($findActivity as $activity) {
-                        //     if ($activity['type'] == 1) {
-                        //         $color = "green";
-                        //     } else {
-                        //         $color = "red";
-                        //     }
+                        $findActivity = selectAllWithOrder('feeds', [''], 'id', 'DESC');
+                        $x = 0;
+                        foreach ($findActivity as $activity) {
+                            if ($activity['feed_type'] == "Annoucements") {
+                                $color = "green";
+                            } else if ($activity['feed_type'] == "Bans of Marriage") {
+                                $color = "yellow";
+                            } else {
+                                $color = "blue";
+                            }
                         ?>
-                            <p style="color:<?php //echo $color ?>">
-                                <?php //echo $activity['description'] ?>
+                            <h3 style="color:<?php echo $color ?>">
+                                <?php echo $activity['title'] ?>
+                            </h3>
+                            <p>
+                                <?php echo htmlspecialchars_decode(stripslashes($activity['message'])); ?>
                             </p>
                         <?php
-                            // if (++$x == 10) {
-                            //     break;
-                            // }
-                        // }
+                            if (++$x == 10) {
+                                break;
+                            }
+                        }
                         ?>
                     </div>
                     <!-- Above display purchase and transaction data in the form of descriptions -->

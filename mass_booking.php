@@ -4,13 +4,13 @@ include('header.php');
 $digits = 7;
 $randms = str_pad(rand(0, pow(10, $digits) - 1), $digits, '0', STR_PAD_LEFT);
 
-if ($findPermissions['feeds'] != 1) {
+if ($findPermissions['mass_booking'] != 1) {
     $_SESSION["feedback"] = "You do not have permission!";
     $_SESSION["Lack_of_intfund_$randms"] = "10";
     // using js so as to aviod header error
 ?>
     <script>
-        location.replace("index.php?message1=<?php echo $randms ?>");
+        location.replace("index.php?mass_intention1=<?php echo $randms ?>");
     </script>
 <?php
     exit();
@@ -19,14 +19,13 @@ if ($findPermissions['feeds'] != 1) {
 // Processing form data when form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
-    $feed_type = test_input($_POST['feed_type']);
-    $feed = test_input($_POST['feed']);
-    $title = test_input($_POST['title']);
-    $today = date('Y-m-d H:i:s');
+    $person = test_input($_POST['person']);
+    $mass_intention = test_input($_POST['mass_intention']);
+    // $profile_id = test_input($_POST['profile_id']);
 
 
     // create feed
-    $feed_created = create('feeds', ['title' => $title, 'feed_type' => $feed_type, 'message' => $feed, 'date_posted' => $today, 'posted_by' => $profile_id]);
+    $feed_created = create('mass_booking', ['person' => $person, 'mass_intention' => $mass_intention, 'status' => 0, 'profile_id' => $profile_id]);
 
     if ($feed_created) {
         echo '
@@ -35,7 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     swal({
                         icon: "success",
                         title: "Success",
-                        text: "New feed Created!",
+                        text: "Mass Booked Successfully!",
                         button: false,
                         timer: 3000
                     });
@@ -55,7 +54,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <div class="container-fluid">
 
     <!-- Page Heading -->
-    <h1 class="h3 mb-4 text-gray-800">Feeds/ Annoucements</h1>
+    <h1 class="h3 mb-4 text-gray-800">MASS BOOKING</h1>
 
     <div class="row">
 
@@ -67,25 +66,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div class="card-body">
                     <form class="user" autocomplete="off" method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" novalidate>
                         <div class="form-group">
-                            <label for="">Title</label>
-                            <input type="text" name="title" class="form-control" required>
+                            <label for="">Person</label>
+                            <input type="text" name="person" class="form-control" required placeholder="Who's booking">
                         </div>
-                        <div class="form-group">
-                            <label for="">Feed type</label>
-                            <select name="feed_type" class="form-control" id="feed_type" required>
-                                <option value="Annoucements">Annoucements</option>
-                                <option value="Bans of Marriage">Bans of Marriage</option>
-                                <option value="Feeds">Feeds</option>
-                            </select>
-                        </div>
+                        
                         <script>
                             tinymce.init({
-                                selector: '#feed'
+                                selector: '#mass_intention'
                             });
                         </script>
                         <div class="form-group">
-                            <label for="">feed</label>
-                            <textarea name="feed" id="feed" cols="30" rows="10" required></textarea>
+                            <label for="">Mass Intention</label>
+                            <textarea name="mass_intention" id="mass_intention" cols="30" rows="10" required></textarea>
                         </div>
                         <button type="reset" class="btn btn-danger btn-icon-split">
                             <span class="icon text-white-50">
@@ -107,27 +99,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="col-lg-6">
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Feeds</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">Mass Bookings</h6>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                             <thead>
                                 <tr>
-                                    <th>Feed Type</th>
-                                    <th>Message</th>
-                                    <th>Date Posted</th>
+                                    <th>Booked By</th>
+                                    <th>Mass Intention</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
-                                $feeds = selectAll('feeds');
-                                foreach ($feeds as $feed) {
+                                $mass_booking = selectAll('mass_booking');
+                                foreach ($mass_booking as $feed) {
                                 ?>
                                     <tr>
-                                        <td><?php echo strtoupper($feed['feed_type']); ?></td>
-                                        <td><?php echo $feed['message'] ?></td>
-                                        <td><?php echo $feed['date_posted'] ?></td>
+                                        <td><?php echo strtoupper($feed['person']); ?></td>
+                                        <td><?php echo $feed['mass_intention'] ?></td>
                                     </tr>
                                 <?php
                                 }

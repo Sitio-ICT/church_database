@@ -4,17 +4,17 @@ include('header.php');
 
 $randms = generateRandomString(10);
 
-// if ($findRights['users'] != 1) {
-//     $_SESSION["feedback"] = "You do not have User Management permission!";
-//     $_SESSION["Lack_of_intfund_$randms"] = "10";
-// using js so as to aviod header error
+if ($findPermissions['user_management'] != 1) {
+    $_SESSION["feedback"] = "You do not have User Management permission!";
+    $_SESSION["Lack_of_intfund_$randms"] = "10";
+    // using js so as to aviod header error
 ?>
-<script>
-    // location.replace("index.php?message1=<?php echo $randms ?>");
-</script>
+    <script>
+        location.replace("index.php?message1=<?php echo $randms ?>");
+    </script>
 <?php
-//     exit();
-// }
+    exit();
+}
 
 ?>
 
@@ -22,7 +22,7 @@ $randms = generateRandomString(10);
 <div class="container-fluid">
 
     <!-- Page Heading -->
-    <h1 class="h3 mb-4 text-gray-800">USER MANAGEMENT</h1>
+    <h1 class="h3 mb-4 text-gray-800">ADMIN USER MANAGEMENT</h1>
 
     <div class="row">
 
@@ -33,40 +33,99 @@ $randms = generateRandomString(10);
                 </div>
                 <div class="card-body">
                     <form class="user" autocomplete="off" method="POST" action="functions/people/users/create_user.php">
-                        <!-- <div class="form-group">
-                            <input type="text" class="form-control form-control-user" name="username" placeholder="username" required>
-                        </div> -->
                         <div class="form-group">
                             <input type="text" class="form-control form-control-user" name="firstname" placeholder="Firstname" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control form-control-user" name="middlename" placeholder="Middlename">
                         </div>
                         <div class="form-group">
                             <input type="text" class="form-control form-control-user" name="lastname" placeholder="Lastname" required>
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control form-control-user" name="username" placeholder="username" required>
+                            <input type="text" id="username" class="form-control form-control-user" name="username" placeholder="username" required>
+                            <div id="usernamed"></div>
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control form-control-user" name="email" aria-describedby="emailHelp" placeholder="Email...">
+                            <input type="text" id="email" class="form-control form-control-user" name="email" aria-describedby="emailHelp" placeholder="Email...">
+                            <div id="emailed"></div>
                         </div>
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <input type="tel" class="form-control form-control-user" name="phone" placeholder="Phone" required>
+                        </div> -->
+                        <script>
+                            $(document).ready(function() {
+                                $('#email').on("change blur click", function() {
+                                    var email = $('#email').val();
+                                    $.ajax({
+                                        url: "functions/system/ajax_functions/check_email.php",
+                                        method: "POST",
+                                        data: {
+                                            email: email
+                                        },
+                                        success: function(data) {
+                                            $('#emailed').html(data);
+                                        }
+                                    })
+                                });
+
+                                $('#username').on("change blur click", function() {
+                                    var username = $('#username').val();
+                                    $.ajax({
+                                        url: "functions/system/ajax_functions/check_username.php",
+                                        method: "POST",
+                                        data: {
+                                            username: username
+                                        },
+                                        success: function(data) {
+                                            $('#usernamed').html(data);
+                                        }
+                                    })
+                                });
+                            });
+                            // add confirm password script
+                        </script>
+                        <div class="form-group row">
+                            <div class="col-sm-6 mb-3 mb-sm-0">
+                                <input type="password" name="passkey" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters">
+                            </div>
+
+                            <div class="col-sm-6">
+                                <input type="password" name="confirm_passkey" class="form-control form-control-user" id="exampleRepeatPassword" placeholder="Repeat Password">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-check form-check-inline">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="checkbox" onclick="show()">
+                                    Show Password
+                                    <span class="form-check-sign">
+                                        <span class="check"></span>
+                                    </span>
+                                </label>
+                            </div>
+                            <script>
+                                function show() {
+                                    var x = document.getElementById("exampleInputPassword");
+                                    if (x.type === "password") {
+                                        x.type = "text";
+                                    } else {
+                                        x.type = "password";
+                                    }
+                                }
+                            </script>
                         </div>
                         <legend>Role and Permissions:</legend>
                         <div class="row">
+                            <input type="text" name="usertype" value="admin" hidden>
                             <div class="form-group col-lg-6">
                                 User Management <input type="checkbox" name="users" value="1" class="form-comtrol">
                             </div>
                             <div class="form-group col-lg-6">
-                                Configurations <input type="checkbox" name="config" value="1"  class="form-comtrol">
+                                Configurations <input type="checkbox" name="config" value="1" class="form-comtrol">
                             </div>
                             <div class="form-group col-lg-6">
                                 Feeds <input type="checkbox" name="feeds" value="1" class="form-comtrol">
                             </div>
                             <div class="form-group col-lg-6">
-                                Mass Booking <input type="checkbox" name="mass-booking" value="1" class="form-comtrol">
+                                Mass Booking <input type="checkbox" name="mass_booking" value="1" class="form-comtrol">
                             </div>
                             <div class="form-group col-lg-12">
                                 Transactions(Subscriptions, Donations...) <input type="checkbox" name="transaction" value="1" class="form-comtrol">
@@ -133,7 +192,7 @@ $randms = generateRandomString(10);
                                     <tr>
                                         <td><?php echo $profile['first_name'] . " " . $profile['middle_name'] . " " . $profile['last_name'] ?></td>
                                         <td><?php echo $user['username']; ?></td>
-                                        <td><?php echo $profile['phone']; ?></td>
+                                        <td><?php echo $profile['phone_no']; ?></td>
                                         <td><?php echo $profile['email']; ?></td>
                                         <td>
                                             <a href="client_view.php?view=<?php echo $user['id'] ?>" class="btn btn-info btn-icon-split">

@@ -19,13 +19,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $errors = array();
     $success = array();
 
-    function test_input($data)
-    {
-        $data = trim($data);
-        $data = stripslashes($data);
-        $data = htmlspecialchars($data);
-        return $data;
-    }
+    // function test_input($data)
+    // {
+    //     $data = trim($data);
+    //     $data = stripslashes($data);
+    //     $data = htmlspecialchars($data);
+    //     return $data;
+    // }
 
     $email = test_input($_POST["email"]);
 
@@ -48,7 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Send email to user with the token in a link they can click on
         $to = $email;
         $subject = "Reset Password Notification | Holy Family";
-        $msg = "Hi there, click on this <a href=\"https://holyfamily.com.ng/reset-password.php?token=" . $token . "\">link</a> to reset your password on our site.";
+        $msg = "Hi there, click on this <a href=\"https://members.holyfamilycclc.org/reset-password.php?token=" . $token . "\">link</a> to reset your password on our site.";
         $msg = wordwrap($msg, 70);
         $headers = "From: no-reply@holyfamily.com.ng";
         $mailed = mail($to, $subject, $msg, $headers);

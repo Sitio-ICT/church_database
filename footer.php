@@ -51,9 +51,10 @@
 <script src="js/sb-admin-2.min.js"></script>
 
 <!-- Page level plugins -->
-<script src="vendor/chart.js/Chart.min.js"></script>
+<!-- <script src="vendor/chart.js/Chart.min.js"></script> -->
 <script src="vendor/datatables/jquery.dataTables.min.js"></script>
 <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+<script src="tableExport/tableExport.js"></script>
 
 <!-- Page level custom scripts -->
 <script>
@@ -67,11 +68,19 @@
             ],
             "iDisplayLength": 50,
         });
+        // $(".export").click(function() {
+        //     var export_type = $(this).data('export-type');
+        //     $('#dataTable').tableExport({
+        //         type: export_type,
+        //         escape: 'false',
+        //         ignoreColumn: []
+        //     });
+        // });
     });
 </script>
 <!-- <script src="js/demo/datatables-demo.js"></script> -->
-<script src="js/demo/chart-area-demo.js"></script>
-<script src="js/demo/chart-pie-demo.js"></script>
+<!-- <script src="js/demo/chart-area-demo.js"></script>
+<script src="js/demo/chart-pie-demo.js"></script> -->
 
 </body>
 

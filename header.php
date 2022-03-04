@@ -8,6 +8,7 @@ if (!$_SESSION["loggedin"] == True) {
     exit;
 }
 $profile_id = $_SESSION['profile_id'];
+$user_type = $_SESSION['usertype'];
 // find admin permissions
 $findPermissions = findPermissions($_SESSION['userid']);
 ?>
@@ -110,7 +111,7 @@ $findPermissions = findPermissions($_SESSION['userid']);
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.php">
                 <div class="sidebar-brand-icon">
                     <!-- <i class="fas fa-laugh-wink"></i> -->
-                    <img src="uploads/tool-shop-2.png" style="width: 35px" alt="">
+                    <img src="uploads/logo.png" style="width: 35px" alt="">
                 </div>
                 <div class="sidebar-brand-text mx-3">Holy Family</div>
             </a>
@@ -128,6 +129,46 @@ $findPermissions = findPermissions($_SESSION['userid']);
             <!-- Divider -->
             <hr class="sidebar-divider">
 
+            
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Profile
+            </div>
+
+            <!-- Nav Item - Products -->
+            <li class="nav-item ">
+                <a class="nav-link" href="calender.php">
+                    <i class="fas fa-clipboard-list"></i>
+                    <span>Calendar</span></a>
+            </li>
+            <!-- Nav Item - Transactions -->
+            <li class="nav-item ">
+                <a class="nav-link" href="index.php">
+                    <i class="fas fa-dollar-sign"></i>
+                    <span>Transactions</span></a>
+            </li>
+            <!-- Nav Item - Account -->
+            <li class="nav-item ">
+                <a class="nav-link" href="societies.php">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Organizations</span></a>
+            </li>
+            <!-- Nav Item - Support -->
+            <li class="nav-item ">
+                <a class="nav-link" href="client_view.php?user=<?php echo $_SESSION['userid'] ?>">
+                    <i class="fas fa-user"></i>
+                    <span>Profile</span></a>
+            </li>
+            
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <?php
+
+            if ($user_type == "admin") {
+            ?>
             <!-- Church management begins here -->
             <!-- Heading -->
 
@@ -152,10 +193,11 @@ $findPermissions = findPermissions($_SESSION['userid']);
                         <h6 class="collapse-header">Societies:</h6>
                         <a class="collapse-item" href="societies.php">Society</a>
                         <h6 class="collapse-header">Others:</h6>
+                        <a class="collapse-item" href="record_sacrament.php">Record Sacrament</a>
                         <?php
                         if ($findPermissions['mass_booking'] == 1) {
                         ?>
-                            <a class="collapse-item" href="products.php">Mass Booking</a>
+                            <a class="collapse-item" href="mass_booking.php">Mass Booking</a>
                             <a class="collapse-item" href="feeds.php">Feeds/Annoucements</a>
                         <?php
                         }
@@ -234,47 +276,14 @@ $findPermissions = findPermissions($_SESSION['userid']);
 
             ?>
             <!-- Church Management ends here -->
-            <?php
 
-            // if ($usertype == "USER") {
-            ?>
-
-            <!-- Heading -->
-            <div class="sidebar-heading">
-                Profile
-            </div>
-
-            <!-- Nav Item - Products -->
-            <li class="nav-item ">
-                <a class="nav-link" href="calender.php">
-                    <i class="fas fa-clipboard-list"></i>
-                    <span>Calendar</span></a>
-            </li>
-            <!-- Nav Item - Transactions -->
-            <li class="nav-item ">
-                <a class="nav-link" href="index.php">
-                    <i class="fas fa-dollar-sign"></i>
-                    <span>Transactions</span></a>
-            </li>
-            <!-- Nav Item - Account -->
-            <li class="nav-item ">
-                <a class="nav-link" href="account.php">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Orgaizations</span></a>
-            </li>
-            <!-- Nav Item - Support -->
-            <li class="nav-item ">
-                <a class="nav-link" href="client_view.php?user=<?php echo $_SESSION['userid'] ?>">
-                    <i class="fas fa-user"></i>
-                    <span>Profile</span></a>
-            </li>
-            <?php
-            // }
-            ?>
 
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
+            <?php
+            }
+            ?>
 
             <!-- Sidebar Toggler (Sidebar) -->
             <div class="text-center d-none d-md-inline">

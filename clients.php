@@ -31,7 +31,17 @@ if ($findPermissions['user_management'] != 1) {
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
                     <h6 class="m-0 font-weight-bold text-primary">Active Members</h6>
+                    <div style="float: right;">
+                        <!-- <b>Total: <span id="total"></span></b> || -->
+                        <a href="#" class="btn btn-info btn-icon-split export" data-export-type="excel">
+                            <span class="icon text-white-50">
+                                <i class="fas fa-download fa-sm text-white-50"></i>
+                            </span>
+                            <span class="text">Export EXCEL</span>
+                        </a>
+                    </div>
                 </div>
+
                 <div class="card-body">
 
                     <div class="table-responsive">
@@ -305,6 +315,14 @@ if ($findPermissions['user_management'] != 1) {
             "iDisplayLength": 50,
         });
     });
+    $(".export").click(function() {
+            var export_type = $(this).data('export-type');
+            $('#dataTables').tableExport({
+                type: export_type,
+                escape: 'false',
+                ignoreColumn: []
+            });
+        });
 </script>
 <?php
 
