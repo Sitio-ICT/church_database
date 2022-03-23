@@ -6,8 +6,8 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="description" content="The Holy Family Catholic Church membership CRM, built to allow the church and its members to digitize key processes">
+    <meta name="author" content="Sitio ICT">
 
     <title>Holy Family Catholic Church</title>
 
@@ -153,6 +153,9 @@
                                     <div class="col-sm-6">
                                         <input type="password" name="confirm_passkey" class="form-control form-control-user" id="exampleRepeatPassword" placeholder="Repeat Password">
                                     </div>
+                                    <div class="col-sm-12">
+                                        <p class="small">Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters</p>
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="form-check form-check-inline">
@@ -176,7 +179,7 @@
                                     </script>
                                 </div>
                                 <p>
-                                    <?php echo $_SESSION['feedback']; 
+                                    <?php //echo $_SESSION['feedback']; 
                                     ?>
                                 </p>
                                 <button type="submit" class="btn btn-primary btn-user btn-block">Register Account</button>

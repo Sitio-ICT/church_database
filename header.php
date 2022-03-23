@@ -21,8 +21,8 @@ $findPermissions = findPermissions($_SESSION['userid']);
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="description" content="The Holy Family Catholic Church membership CRM, built to allow the church and its members to digitize key processes">
+    <meta name="author" content="Sitio ICT">
 
     <title>Holy Family Catholic Church</title>
 
@@ -96,6 +96,7 @@ $findPermissions = findPermissions($_SESSION['userid']);
         }
     }
     ?>
+    <link rel="icon" type="image/png" href="uploads/logo.png"/>
 
 </head>
 
@@ -136,7 +137,7 @@ $findPermissions = findPermissions($_SESSION['userid']);
                 Profile
             </div>
 
-            <!-- Nav Item - Products -->
+            <!-- Nav Item - Calendar -->
             <li class="nav-item ">
                 <a class="nav-link" href="calender.php">
                     <i class="fas fa-clipboard-list"></i>
@@ -144,15 +145,21 @@ $findPermissions = findPermissions($_SESSION['userid']);
             </li>
             <!-- Nav Item - Transactions -->
             <li class="nav-item ">
-                <a class="nav-link" href="index.php">
+                <a class="nav-link" href="my_transactions.php">
                     <i class="fas fa-dollar-sign"></i>
                     <span>Transactions</span></a>
             </li>
-            <!-- Nav Item - Account -->
+            <!-- Nav Item - Organizations -->
             <li class="nav-item ">
                 <a class="nav-link" href="societies.php">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Organizations</span></a>
+            </li>
+            <!-- Nav Item - Book Mass -->
+            <li class="nav-item ">
+                <a class="nav-link" href="book_mass.php">
+                    <i class="fas fa-clipboard-list"></i>
+                    <span>Book Mass</span></a>
             </li>
             <!-- Nav Item - Support -->
             <li class="nav-item ">
@@ -250,7 +257,16 @@ $findPermissions = findPermissions($_SESSION['userid']);
                     <i class="fas fa-user"></i>
                     <span>Users</span></a>
             </li>
-            <li class="nav-item">
+            
+            <?php
+            if ($findPermissions['configurations'] == 1) {
+            ?>
+                <li class="nav-item">
+                    <a class="nav-link" href="sacraments.php">
+                        <i class="fas fa-fw fa-info-circle"></i>
+                        <span>Sacraments</span></a>
+                </li>
+                <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSupport" aria-expanded="true" aria-controls="collapseUtilities">
                     <i class="fas fa-fw fa-cog"></i>
                     <span>Configurations</span>
@@ -263,14 +279,6 @@ $findPermissions = findPermissions($_SESSION['userid']);
                     </div>
                 </div>
             </li>
-            <?php
-            if ($findPermissions['configurations'] == 1) {
-            ?>
-                <li class="nav-item">
-                    <a class="nav-link" href="sacraments.php">
-                        <i class="fas fa-fw fa-info-circle"></i>
-                        <span>Sacraments</span></a>
-                </li>
             <?php
             }
 

@@ -54,49 +54,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <div class="container-fluid">
 
     <!-- Page Heading -->
-    <h1 class="h3 mb-4 text-gray-800">MASS BOOKING</h1>
+    <h1 class="h3 mb-4 text-gray-800">BOOKED MASS</h1>
 
     <div class="row">
 
-        <div class="col-lg-6">
-            <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary"></h6>
-                </div>
-                <div class="card-body">
-                    <form class="user" autocomplete="off" method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" novalidate>
-                        <div class="form-group">
-                            <label for="">Person</label>
-                            <input type="text" name="person" class="form-control" required placeholder="Who's booking">
-                        </div>
-                        
-                        <script>
-                            tinymce.init({
-                                selector: '#mass_intention'
-                            });
-                        </script>
-                        <div class="form-group">
-                            <label for="">Mass Intention</label>
-                            <textarea name="mass_intention" id="mass_intention" cols="30" rows="10" required></textarea>
-                        </div>
-                        <button type="reset" class="btn btn-danger btn-icon-split">
-                            <span class="icon text-white-50">
-                                <i class="fas fa-flag"></i>
-                            </span>
-                            <span class="text">Reset</span>
-                        </button>
-                        <button type="submit" class="btn btn-success btn-icon-split">
-                            <span class="icon text-white-50">
-                                <i class="fas fa-check"></i>
-                            </span>
-                            <span class="text">Submit</span>
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </div>
         <!-- lists of users -->
-        <div class="col-lg-6">
+        <div class="col-lg-12">
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
                     <h6 class="m-0 font-weight-bold text-primary">Mass Bookings</h6>

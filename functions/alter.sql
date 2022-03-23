@@ -1,5 +1,5 @@
 -- 
-CREATE TABLE `church_database`.`password_resets` ( `id` INT NOT NULL AUTO_INCREMENT , 
+CREATE TABLE `password_resets` ( `id` INT NOT NULL AUTO_INCREMENT , 
 `email` VARCHAR(60) NOT NULL , `token` VARCHAR(600) NOT NULL , 
 `date_requsted` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP , PRIMARY KEY (`id`)) ENGINE = InnoDB;
 ALTER TABLE `donation` ADD `profile_id` INT NOT NULL AFTER `description`;
