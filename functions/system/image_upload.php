@@ -5,7 +5,7 @@ $digits = 7;
 $randms = str_pad(rand(0, pow(10, $digits) - 1), $digits, '0', STR_PAD_LEFT);
 
 if (isset($_POST)) {
-    $client_id = $_POST['client'];
+    $profile_id = $_POST['profile_id'];
 
     if (!empty($_FILES['image']['name'])) {
 
@@ -20,8 +20,8 @@ if (isset($_POST)) {
         if (in_array(strtolower($ext), $valid_extensions)) {
             if (move_uploaded_file($tmp, '../../uploads/' . $image_name)) {
                 $imageData = [
-                    'customers_idcustomers' => $client_id,
-                    'image_name' => $image_name
+                    'profile_id' => $profile_id,
+                    'image' => $image_name
                 ];
                 $uploadImage = insert('images', $imageData);
                 // dd($uploadImage);
@@ -29,30 +29,30 @@ if (isset($_POST)) {
                     $error = "Error: \n" . mysqli_error($connection); //checking for errors
                     $_SESSION["feedback"] = "Sorry could not upload image! - $error";
                     $_SESSION["Lack_of_intfund_$randms"] = "10";
-                    echo header("Location: ../../client_view.php?view=$client_id&message1=$randms");
+                    echo header("Location: ../../client_view.php?view=$profile_id&message1=$randms");
                     exit();
                 } else {
                     $_SESSION["feedback"] = "Image Successfuly Uploaded";
                     $_SESSION["Lack_of_intfund_$randms"] = "10";
-                    echo header("Location: ../../client_view.php?view=$client_id&message0=$randms");
+                    echo header("Location: ../../client_view.php?view=$profile_id&message0=$randms");
                     exit();
                 }
             } else {
                 $_SESSION["feedback"] = "Image Upload Failed";
                 $_SESSION["Lack_of_intfund_$randms"] = "10";
-                echo header("Location: ../../client_view.php?view=$client_id&message1=$randms");
+                echo header("Location: ../../client_view.php?view=$profile_id&message1=$randms");
                 exit();
             }
         } else {
             $_SESSION["feedback"] = "Invalid File Format";
             $_SESSION["Lack_of_intfund_$randms"] = "10";
-            echo header("Location: ../../client_view.php?view=$client_id&message1=$randms");
+            echo header("Location: ../../client_view.php?view=$profile_id&message1=$randms");
             exit();
         }
     } else {
         $_SESSION["feedback"] = "Please Select Image";
         $_SESSION["Lack_of_intfund_$randms"] = "10";
-        echo header("Location: ../../client_view.php?view=$client_id&message1=$randms");
+        echo header("Location: ../../client_view.php?view=$profile_id&message1=$randms");
         exit();
     }
 }

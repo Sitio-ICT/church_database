@@ -6,33 +6,59 @@ $randms = str_pad(rand(0, pow(10, $digits) - 1), $digits, '0', STR_PAD_LEFT);
 
 $findProfile = findProfile($profile_id);
 
-
+$response = '';
+if(isset($_GET['response'])){
+    $response = $_GET['response'];
+    if ($response == 'success'){
+        echo '
+        <script type="text/javascript">
+            $(document).ready(function(){
+                swal({
+                    icon: "success",
+                    title: "Success",
+                    text: "Mass Booked Successfully!",
+                    button: true,
+                    timer: 3000
+                });
+            });
+        </script>
+        ';
+    }else if($response == 'error'){
+        $deleteBooking = delete('mass_booking', $_SESSION['pay_id'], 'id' );
+        echo '
+        <script type="text/javascript">
+            $(document).ready(function(){
+                swal({
+                    icon: "error",
+                    title: "Error",
+                    text: "Mass not Booked!",
+                    button: true,
+                    timer: 3000
+                });
+            });
+        </script>
+        ';
+    }
+}
 
 // Processing form data when form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $person = test_input($_POST['person']);
     $mass_intention = test_input($_POST['mass_intention']);
-    // $profile_id = test_input($_POST['profile_id']);
+    $email = test_input($_POST['email']);
 
 
     // create feed
     $feed_created = create('mass_booking', ['person' => $person, 'mass_intention' => $mass_intention, 'status' => 0, 'profile_id' => $profile_id]);
 
     if ($feed_created) {
-        echo '
-            <script type="text/javascript">
-                $(document).ready(function(){
-                    swal({
-                        icon: "success",
-                        title: "Success",
-                        text: "Mass Booked Successfully!",
-                        button: false,
-                        timer: 3000
-                    });
-                });
-            </script>
-            ';
+        
+        // echo "New record created successfully";
+        $_SESSION['email'] = $email;
+        $_SESSION['pay_id'] = $feed_created;
+        header("Location: https://paystack.com/pay/mass_booking");
+        die();
     }
 }
 
@@ -83,14 +109,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             </span>
                             <span class="text">Reset</span>
                         </button>
-                        <button type="submit" class="btn btn-success btn-icon-split" onclick="payWithPaystack()">
+                        <button type="submit" class="btn btn-success btn-icon-split">
                             <span class="icon text-white-50">
                                 <i class="fas fa-check"></i>
                             </span>
                             <span class="text">Submit</span>
                         </button>
                     </form>
-                    <script>
+                    <!-- <script>
                         const paymentForm = document.getElementById('paymentForm');
                         paymentForm.addEventListener("submit", payWithPaystack, false);
 
@@ -140,8 +166,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             });
                             handler.openIframe();
                         }
-                    </script>
-                    
+                    </script> -->
+
                 </div>
             </div>
         </div>
@@ -184,7 +210,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </div>
 <!-- /.container-fluid -->
 
-<script src="https://js.paystack.co/v1/inline.js"></script>
+<!-- <script src="https://js.paystack.co/v1/inline.js"></script> -->
 <?php
 
 include('footer.php');

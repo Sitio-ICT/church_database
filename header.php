@@ -34,8 +34,7 @@ $findPermissions = findPermissions($_SESSION['userid']);
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
     <!-- jquery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <!-- sweet alert -->
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    
 
     <!-- tinyMce -->
     <script src="https://cdn.tiny.cloud/1/05uzyhq8bcam7g5r97qftgykpmc0nghqqrqg1o9oeb2laxq5/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
@@ -44,58 +43,7 @@ $findPermissions = findPermissions($_SESSION['userid']);
     <script src="fullcalender/main.js"></script>
     <link rel="stylesheet" href="fullcalender/main.css">
 
-    <!-- feedback to customer using sweet alert -->
-    <?php
-    $exp_error = "";
-    $message = $_SESSION['feedback'];
-    if ($message != "") {
-    ?>
-        <input type="text" value="<?php echo $message ?>" id="feedback" hidden>
-    <?php
-    }
-    // feedback messages 0 for success and 1 for errors
-
-    if (isset($_GET["message0"])) {
-        $key = $_GET["message0"];
-        $tt = 0;
-
-        if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
-            echo '<script type="text/javascript">
-          $(document).ready(function(){
-            let feedback =  document.getElementById("feedback").value;
-              swal({
-                  type: "success",
-                  title: "Success",
-                  text: feedback,
-                  showConfirmButton: true,
-                  timer: 7000
-              })
-          });
-          </script>
-          ';
-            $_SESSION["lack_of_intfund_$key"] = 0;
-        }
-    } else if (isset($_GET["message1"])) {
-        $key = $_GET["message1"];
-        $tt = 0;
-        if ($tt !== $_SESSION["lack_of_intfund_$key"]) {
-            echo '<script type="text/javascript">
-          $(document).ready(function(){
-            let feedback =  document.getElementById("feedback").value;
-              swal({
-                  type: "error",
-                  title: "Error",
-                  text: feedback,
-                  showConfirmButton: true,
-                  timer: 7000
-              })
-          });
-          </script>
-          ';
-            $_SESSION["lack_of_intfund_$key"] = 0;
-        }
-    }
-    ?>
+    
     <link rel="icon" type="image/png" href="uploads/logo.png"/>
 
 </head>
@@ -163,7 +111,7 @@ $findPermissions = findPermissions($_SESSION['userid']);
             </li>
             <!-- Nav Item - Support -->
             <li class="nav-item ">
-                <a class="nav-link" href="client_view.php?user=<?php echo $_SESSION['userid'] ?>">
+                <a class="nav-link" href="client_view.php?view=<?php echo $_SESSION['userid'] ?>">
                     <i class="fas fa-user"></i>
                     <span>Profile</span></a>
             </li>

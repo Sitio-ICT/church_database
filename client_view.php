@@ -100,29 +100,36 @@ $profile_id = $findUser['profile_id'];
                         <?php
                         }
                         ?>
-                        <a href="#" class="btn btn-info " data-toggle="modal" data-target="#fund">Donate</a>
+                        <a href="#" class="btn btn-success" data-toggle="modal" data-target="#fund">Donate</a>
 
                         <!-- Modal -->
-                        <form action="functions/business/fund_account.php" method="post" enctype="multipart/form-data" autocomplete="off">
+                        <form id="paymentForm">
                             <div class="modal fade" id="fund" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Fund Account</h5>
+                                            <h5 class="modal-title" id="exampleModalLabel">Donate or Pay Tithe</h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
                                         <div class="modal-body">
 
-                                            <input type="text" value="<?php echo $clientId ?>" name="client" hidden>
+                                            <input type="text" id="profile_id" value="<?php echo $clientId ?>" name="client" hidden>
+                                            <input type="text" name="email" id="email" value="<?php echo $findProfile['email'] ?>" hidden>
                                             <div class="form-group">
-                                                <input type="text" class="form-control form-control-user" id="principal" name="amount" placeholder="Amount($)...." required>
+                                                <input type="number" class="form-control form-control-user" id="amount" name="amount" placeholder="Amount(NGN)...." required>
+                                            </div>
+                                            <div class="form-group">
+                                                <select name="type" id="type" class="form-control">
+                                                    <option value="Donation">Donation</option>
+                                                    <option value="Tithe">Tithe</option>
+                                                </select>
                                             </div>
 
-                                            <script>
+                                            <!-- <script>
                                                 $(document).ready(function() {
-                                                    $('#principal').on("change blur", function() {
+                                                    $('#amount').on("change blur", function() {
                                                         var amount = $(this).val();
                                                         $.ajax({
                                                             url: "functions/system/converter.php",
@@ -131,22 +138,70 @@ $profile_id = $findUser['profile_id'];
                                                                 amount: amount
                                                             },
                                                             success: function(data) {
-                                                                $('#principal').val(data);
+                                                                $('#amount').val(data);
                                                             }
                                                         })
                                                     });
 
                                                 });
-                                            </script>
+                                            </script> -->
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                            <button type="submit" class="btn btn-primary">Fund</button>
+                                            <button type="submit" class="btn btn-primary" onclick="payWithPaystack()">Fund</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </form>
+                        <script>
+                            const paymentForm = document.getElementById('paymentForm');
+                            paymentForm.addEventListener("submit", payWithPaystack, false);
+
+                            function payWithPaystack(e) {
+                                e.preventDefault();
+                                let handler = PaystackPop.setup({
+                                    key: 'pk_test_381f76fca3b0f850654e352c0424f2a6d78466e2', // Replace with your public key
+                                    email: document.getElementById("email").value,
+                                    type: document.getElementById("type").value,
+                                    profile_id: document.getElementById("profile_id").value,
+                                    amount: 100 * document.getElementById("amount").value,
+                                    ref: '' + Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
+                                    // label: "Optional string that replaces customer email"
+                                    onClose: function() {
+                                        alert('Window closed.');
+                                    },
+                                    callback: function(response) {
+                                        // let message = 'Payment complete! Reference: ' + response.reference;
+                                        // alert(message);
+                                        $.ajax({
+                                            url: 'https://https://members.holyfamilycclc.org/pay.php?reference=' + response.reference,
+                                            method: 'get',
+                                            success: function(response) {
+                                                // the transaction status is in response.data.status
+                                                alert(response.data.status);
+                                                if (response == "success") {
+                                                    $.ajax({
+                                                        url: 'https://https://members.holyfamilycclc.org/functions/operations/donate.php',
+                                                        method: 'post',
+                                                        data: {
+                                                            amount: amount,
+                                                            type: type,
+                                                            profile_id: profile_id
+                                                        },
+                                                        success: function(response) {
+                                                            // the transaction status is in response.data.status
+                                                            location.replace("transaction.php");
+                                                        }
+                                                    });
+                                                }
+                                            }
+                                        });
+                                    }
+                                });
+                                handler.openIframe();
+                            }
+                        </script>
                         <!-- /modal ends here -->
                         <!-- </form> -->
                     <?php } ?>
@@ -156,6 +211,59 @@ $profile_id = $findUser['profile_id'];
         </div>
 
         <!-- relationships comes here -->
+        <div class="col-lg-6">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <div style="float:left">
+                        <h6 class="m-0 font-weight-bold text-primary">Transactions</h6>
+                    </div>
+                    <div style="float:right">
+
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable4" width="100%" cellspacing="0">
+
+                            <thead>
+                                <tr>
+                                    <th>Relationship</th>
+                                    <th>Person</th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+
+                                <tr>
+                                    <th>Relationship</th>
+                                    <th>Person</th>
+                                </tr>
+
+                            </tfoot>
+                            <tbody>
+                                <?php
+                                $findRelations = findRelationships($profile_id);
+                                foreach ($findRelations as $relations) {
+                                ?>
+                                    <tr>
+
+                                        <td><?php echo $relations['relatioship_type'] ?></td>
+                                        <td>
+                                            <?php
+                                            $findPerson = findProfile($relations['related_to']);
+                                            echo $findPerson['first_name'] . " " . $findPerson['middle_name'] . " " . $findPerson['last_name'];
+                                            ?>
+                                        </td>
+
+                                    </tr>
+                                <?php
+                                }
+                                ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- ends here -->
 
         <div class="col-lg-6">
@@ -288,7 +396,6 @@ $profile_id = $findUser['profile_id'];
                                     <th>Amount</th>
                                     <th>Transaction Date</th>
                                     <th>Reference Id</th>
-                                    <th>Product</th>
                                     <th>Description</th>
                                 </tr>
                             </thead>
@@ -329,43 +436,192 @@ $profile_id = $findUser['profile_id'];
         </div>
         <!-- /tranction info -->
 
+        <!-- pictures -->
+        <div class="col-lg-12">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <div style="float:left">
+                        <h6 class="m-0 font-weight-bold text-primary">Pictures</h6>
+                    </div>
+                    <div style="float:right">
+                        <a href="#" class="btn btn-info btn-icon-split" data-toggle="modal" data-target="#exampleModal">
+                            <span class="icon text-white-50">
+                                <i class="fas fa-info-circle"></i>
+                            </span>
+                            <span class="text">Upload file</span>
+                        </a>
+                    </div>
+                    <!-- Modal -->
+                    <form action="functions/system/image_upload.php" method="post" enctype="multipart/form-data">
+                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Upload Document</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
 
+                                        <input type="text" value="<?php echo $profile_id ?>" name="profile_id" hidden>
+                                        <div class="form-group">
+                                            <input type="file" class="form-control form-control-user" name="image" placeholder="" required>
+                                        </div>
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="submit" id="upload-image" class="btn btn-primary">Create</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <!-- /modal ends here -->
+                </div>
+                <div class="card-body">
+                    <!-- Add fancyBox -->
+                    <link rel="stylesheet" href="assets/fancybox-2.1.7/source/jquery.fancybox.css" type="text/css" media="screen" />
+                    <script type="text/javascript" src="assets/fancybox-2.1.7/source/jquery.fancybox.js"></script>
+                    <script type="text/javascript" src="assets/fancybox-2.1.7/source/jquery.fancybox.pack.js"></script>
+
+                    <style>
+                        .fileinput .thumbnail {
+                            display: inline-block;
+                            margin-bottom: 10px;
+                            overflow: hidden;
+                            text-align: center;
+                            vertical-align: middle;
+                            max-width: 250px;
+                            box-shadow: 0 10px 30px -12px rgba(0, 0, 0, .42), 0 4px 25px 0 rgba(0, 0, 0, .12), 0 8px 10px -5px rgba(0, 0, 0, .2);
+                        }
+
+                        .thumbnail {
+                            border: 0 none;
+                            border-radius: 4px;
+                            padding: 0;
+                        }
+
+                        .fileinput .thumbnail>img {
+                            max-height: 100%;
+                            width: 100%;
+                        }
+
+                        html * {
+                            -webkit-font-smoothing: antialiased;
+                            -moz-osx-font-smoothing: grayscale;
+                        }
+
+                        img {
+                            vertical-align: middle;
+                            border-style: none;
+                        }
+
+                        .gallery {
+                            display: inline-block;
+                        }
+
+                        .close-icon {
+                            border-radius: 50%;
+                            position: absolute;
+                            right: 5px;
+                            top: -10px;
+                            padding: 0.1px;
+                            cursor: pointer;
+                        }
+                    </style>
+                    <!-- Images are here -->
+                    <div class="row">
+                        <?php
+                        // echo $_SESSION['feedback'];
+                        $findImages = selectAll('images', ['profile_id' => $profile_id]);
+                        foreach ($findImages as $image) {
+                        ?>
+                            <div class='col-md-4 mt-3'>
+                                <a class="fancybox" rel="group" href="uploads/<?php echo $image['image'] ?>">
+                                    <img class="img-fluid" alt="" src="uploads/<?php echo $image['image'] ?>" />
+                                </a>
+                                <form action="functions/system/image_delete.php" method="POST">
+                                    <input type="hidden" name="id" value="<?php echo $image['id'] ?>">
+                                    <input type="hidden" name="profile_id" value="<?php echo $image['profile_id']; ?>">
+                                    <button type="submit" id="delete-image" class="close-icon" onclick="return confirm('Are you sure you want to delete this image?')">
+                                        <i class="material-icons">clear</i>
+                                    </button>
+                                </form>
+                            </div>
+                        <?php
+                        }
+                        ?>
+                        <!-- /images end here -->
+                    </div>
+                </div>
+            </div>
+            <!-- /pictiures -->
+
+
+        </div>
 
     </div>
+    <!-- /.container-fluid -->
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $(".fancybox").fancybox({
+                openEffect: "none",
+                closeEffect: "none"
+            });
 
-</div>
-<!-- /.container-fluid -->
+            $("#delete-image").click(function() {
 
-<script>
-    // Call the dataTables jQuery plugin
-    $(document).ready(function() {
-        $('#dataTable2').DataTable({
-            "order": [],
-            "lengthMenu": [
-                [50, 100, 250, 500, -1],
-                [50, 100, 250, 500, "All"]
-            ],
-            "iDisplayLength": 100,
+            });
         });
-    });
-</script>
+    </script>
 
-<script>
-    // Call the dataTables jQuery plugin
-    $(document).ready(function() {
-        $('#dataTable3').DataTable({
-            "order": [],
-            "lengthMenu": [
-                [50, 100, 250, 500, -1],
-                [50, 100, 250, 500, "All"]
-            ],
-            "iDisplayLength": 100,
+    <script>
+        // Call the dataTables jQuery plugin
+        $(document).ready(function() {
+            $('#dataTable2').DataTable({
+                "order": [],
+                "lengthMenu": [
+                    [50, 100, 250, 500, -1],
+                    [50, 100, 250, 500, "All"]
+                ],
+                "iDisplayLength": 10,
+            });
         });
-    });
-</script>
+    </script>
 
-<?php
+    <script>
+        // Call the dataTables jQuery plugin
+        $(document).ready(function() {
+            $('#dataTable4').DataTable({
+                "order": [],
+                "lengthMenu": [
+                    [50, 100, 250, 500, -1],
+                    [50, 100, 250, 500, "All"]
+                ],
+                "iDisplayLength": 10,
+            });
+        });
+    </script>
 
-include('footer.php');
+    <script>
+        // Call the dataTables jQuery plugin
+        $(document).ready(function() {
+            $('#dataTable3').DataTable({
+                "order": [],
+                "lengthMenu": [
+                    [50, 100, 250, 500, -1],
+                    [50, 100, 250, 500, "All"]
+                ],
+                "iDisplayLength": 10,
+            });
+        });
+    </script>
 
-?>
+    <script src="https://js.paystack.co/v1/inline.js"></script>
+    <?php
+
+    include('footer.php');
+
+    ?>

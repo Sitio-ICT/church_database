@@ -81,7 +81,49 @@
 <!-- <script src="js/demo/datatables-demo.js"></script> -->
 <!-- <script src="js/demo/chart-area-demo.js"></script>
 <script src="js/demo/chart-pie-demo.js"></script> -->
+<!-- sweet alert -->
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<!-- feedback to customer using sweet alert -->
+<?php
+$exp_error = "";
+$message = $_SESSION['feedback'];
+if ($message != "") {
+?>
+    <input type="text" value="<?php echo $message ?>" id="feedback" hidden>
+<?php
+}
+// feedback messages 0 for success and 1 for errors
 
+if (isset($_GET["message0"])) {
+
+    echo '<script type="text/javascript">
+          $(document).ready(function(){
+            let feedback =  document.getElementById("feedback").value;
+              swal({
+                  type: "success",
+                  title: "Success",
+                  text: feedback,
+                  showConfirmButton: true,
+              })
+          });
+          </script>
+          ';
+} else if (isset($_GET["message1"])) {
+
+    echo '<script type="text/javascript">
+          $(document).ready(function(){
+            let feedback =  document.getElementById("feedback").value;
+              swal({
+                  type: "error",
+                  title: "Error",
+                  text: feedback,
+                  showConfirmButton: true,
+              })
+          });
+          </script>
+          ';
+}
+?>
 </body>
 
 </html>
