@@ -34,17 +34,24 @@ $findPermissions = findPermissions($_SESSION['userid']);
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
     <!-- jquery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    
+
 
     <!-- tinyMce -->
     <script src="https://cdn.tiny.cloud/1/05uzyhq8bcam7g5r97qftgykpmc0nghqqrqg1o9oeb2laxq5/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
 
     <!-- fullcalender -->
-    <script src="fullcalender/main.js"></script>
-    <link rel="stylesheet" href="fullcalender/main.css">
+    <!-- <script src="fullcalender/main.js"></script>
+    <link rel="stylesheet" href="fullcalender/main.css"> -->
+    <!-- My calender script and style -->
+    <!-- Bootstrap Core CSS -->
+    <link href="fullcalender/css/bootstrap.css" rel="stylesheet">
 
-    
-    <link rel="icon" type="image/png" href="uploads/logo.png"/>
+    <!-- FullCalendar -->
+    <link href='fullcalender/css/fullcalendar.css' rel='stylesheet' />
+
+
+
+    <link rel="icon" type="image/png" href="uploads/logo.png" />
 
 </head>
 
@@ -78,7 +85,7 @@ $findPermissions = findPermissions($_SESSION['userid']);
             <!-- Divider -->
             <hr class="sidebar-divider">
 
-            
+
 
             <!-- Heading -->
             <div class="sidebar-heading">
@@ -115,7 +122,7 @@ $findPermissions = findPermissions($_SESSION['userid']);
                     <i class="fas fa-user"></i>
                     <span>Profile</span></a>
             </li>
-            
+
 
             <!-- Divider -->
             <hr class="sidebar-divider">
@@ -124,119 +131,119 @@ $findPermissions = findPermissions($_SESSION['userid']);
 
             if ($user_type == "admin") {
             ?>
-            <!-- Church management begins here -->
-            <!-- Heading -->
+                <!-- Church management begins here -->
+                <!-- Heading -->
 
-            <div class="sidebar-heading">
-                Church Management
-            </div>
+                <div class="sidebar-heading">
+                    Church Management
+                </div>
 
-            <li class="nav-item">
-                <a class="nav-link" href="clients.php">
-                    <i class="fas fa-users"></i>
-                    <span>Members</span></a>
-            </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="clients.php">
+                        <i class="fas fa-users"></i>
+                        <span>Members</span></a>
+                </li>
 
-            <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="fas fa-fw fa-clipboard-list"></i>
-                    <span>Societies and Others</span>
-                </a>
-                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Societies:</h6>
-                        <a class="collapse-item" href="societies.php">Society</a>
-                        <h6 class="collapse-header">Others:</h6>
-                        <a class="collapse-item" href="record_sacrament.php">Record Sacrament</a>
-                        <?php
-                        if ($findPermissions['mass_booking'] == 1) {
-                        ?>
-                            <a class="collapse-item" href="mass_booking.php">Mass Booking</a>
-                            <a class="collapse-item" href="feeds.php">Feeds/Annoucements</a>
-                        <?php
-                        }
-                        ?>
-                        <!-- 
+                <!-- Nav Item - Pages Collapse Menu -->
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                        <i class="fas fa-fw fa-clipboard-list"></i>
+                        <span>Societies and Others</span>
+                    </a>
+                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <h6 class="collapse-header">Societies:</h6>
+                            <a class="collapse-item" href="societies.php">Society</a>
+                            <h6 class="collapse-header">Others:</h6>
+                            <a class="collapse-item" href="record_sacrament.php">Record Sacrament</a>
+                            <?php
+                            if ($findPermissions['mass_booking'] == 1) {
+                            ?>
+                                <a class="collapse-item" href="mass_booking.php">Mass Booking</a>
+                                <a class="collapse-item" href="feeds.php">Feeds/Annoucements</a>
+                            <?php
+                            }
+                            ?>
+                            <!-- 
                         <a class="collapse-item" href="requests.php">RDP Requests</a> -->
 
+                        </div>
                     </div>
-                </div>
-            </li>
-
-            <!-- Nav Item - Utilities Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
-                    <i class="fas fa-users"></i>
-                    <span>Transactions</span>
-                </a>
-                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Transactions:</h6>
-                        <?php
-                        if ($findPermissions['subscriptions'] == 1) {
-                        ?>
-                            <a class="collapse-item" href="transactions.php">All Transactions</a>
-                            <a class="collapse-item" href="manual_payment.php">Manual Payment</a>
-                        <?php
-                        }
-
-                        ?>
-
-
-                    </div>
-                </div>
-            </li>
-
-
-            <!-- Divider -->
-            <hr class="sidebar-divider">
-
-            <!-- Heading -->
-            <div class="sidebar-heading">
-                System
-            </div>
-
-
-            <!-- Nav Item - Tables -->
-
-            <li class="nav-item">
-                <a class="nav-link" href="users.php">
-                    <i class="fas fa-user"></i>
-                    <span>Users</span></a>
-            </li>
-            
-            <?php
-            if ($findPermissions['configurations'] == 1) {
-            ?>
-                <li class="nav-item">
-                    <a class="nav-link" href="sacraments.php">
-                        <i class="fas fa-fw fa-info-circle"></i>
-                        <span>Sacraments</span></a>
                 </li>
+
+                <!-- Nav Item - Utilities Collapse Menu -->
                 <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSupport" aria-expanded="true" aria-controls="collapseUtilities">
-                    <i class="fas fa-fw fa-cog"></i>
-                    <span>Configurations</span>
-                </a>
-                <div id="collapseSupport" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header"></h6>
-                        <a class="collapse-item" href="support.php?view=TICKET">Subscription Model</a>
-                        <a class="collapse-item" href="users.php">Users</a>
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
+                        <i class="fas fa-users"></i>
+                        <span>Transactions</span>
+                    </a>
+                    <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <h6 class="collapse-header">Transactions:</h6>
+                            <?php
+                            if ($findPermissions['subscriptions'] == 1) {
+                            ?>
+                                <a class="collapse-item" href="transactions.php">All Transactions</a>
+                                <a class="collapse-item" href="manual_payment.php">Manual Payment</a>
+                            <?php
+                            }
+
+                            ?>
+
+
+                        </div>
                     </div>
+                </li>
+
+
+                <!-- Divider -->
+                <hr class="sidebar-divider">
+
+                <!-- Heading -->
+                <div class="sidebar-heading">
+                    System
                 </div>
-            </li>
-            <?php
-            }
-
-            ?>
-            <!-- Church Management ends here -->
 
 
+                <!-- Nav Item - Tables -->
 
-            <!-- Divider -->
-            <hr class="sidebar-divider d-none d-md-block">
+                <li class="nav-item">
+                    <a class="nav-link" href="users.php">
+                        <i class="fas fa-user"></i>
+                        <span>Users</span></a>
+                </li>
+
+                <?php
+                if ($findPermissions['configurations'] == 1) {
+                ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="sacraments.php">
+                            <i class="fas fa-fw fa-info-circle"></i>
+                            <span>Sacraments</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSupport" aria-expanded="true" aria-controls="collapseUtilities">
+                            <i class="fas fa-fw fa-cog"></i>
+                            <span>Configurations</span>
+                        </a>
+                        <div id="collapseSupport" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+                            <div class="bg-white py-2 collapse-inner rounded">
+                                <h6 class="collapse-header"></h6>
+                                <a class="collapse-item" href="support.php?view=TICKET">Subscription Model</a>
+                                <a class="collapse-item" href="users.php">Users</a>
+                            </div>
+                        </div>
+                    </li>
+                <?php
+                }
+
+                ?>
+                <!-- Church Management ends here -->
+
+
+
+                <!-- Divider -->
+                <hr class="sidebar-divider d-none d-md-block">
             <?php
             }
             ?>

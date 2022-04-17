@@ -739,3 +739,10 @@ function makePayment($profile_id, $transaction_type, $id, $amount, $description,
 
     return $output;
 }
+
+
+// Calendar starts here
+function findEvents(){
+    $findEvents = selectAll("calendar");
+    return $findEvents;
+}
