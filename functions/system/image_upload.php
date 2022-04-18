@@ -18,7 +18,7 @@ if (isset($_POST)) {
         $valid_extensions = array("jpg", "jpeg", "png", "gif");
 
         if (in_array(strtolower($ext), $valid_extensions)) {
-            if (move_uploaded_file($tmp, '../../uploads/' . $image_name)) {
+            if (copy($tmp, '../../uploads/' . $image_name)) {
                 $imageData = [
                     'profile_id' => $profile_id,
                     'image' => $image_name

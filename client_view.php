@@ -485,7 +485,7 @@ $profile_id = $findUser['profile_id'];
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <button type="submit" id="upload-image" class="btn btn-primary">Create</button>
+                                        <button type="submit" id="upload-image" class="btn btn-primary">Upload</button>
                                     </div>
                                 </div>
                             </div>

@@ -16,7 +16,7 @@ if (isset($_POST) && !empty($_POST['id']) && !empty($_POST['profile_id'])) {
     unlink('uploads/' . $image);
 
     // Delete image upload record from database
-    $sql = "DELETE FROM image WHERE id = {$image_id}";
+    $sql = "DELETE FROM images WHERE id = {$image_id}";
     $result = mysqli_query($connection, $sql);
 
 
