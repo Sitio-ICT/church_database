@@ -14,6 +14,8 @@ if ($findPermissions['subscriptions'] != 1) {
 <?php
     exit();
 }
+$findUser = findUser($profile_id);
+$findClient = findProfile($findUser['profile_id']);
 
 ?>
 
@@ -28,7 +30,9 @@ if ($findPermissions['subscriptions'] != 1) {
         <div class="col-lg-12">
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Account Funding and Purchase</h6>
+                    <div style="float: left;">
+                        <h6 class="m-0 font-weight-bold text-primary">Donations and Tithes</h6>
+                    </div>
                     <div style="float: right;">
                         <b>Total: <span id="total"></span></b> ||
                         <a href="#" class="btn btn-info btn-icon-split export" data-export-type="excel">
@@ -37,6 +41,123 @@ if ($findPermissions['subscriptions'] != 1) {
                             </span>
                             <span class="text">Export EXCEL</span>
                         </a>
+                        <a href="#" class="btn btn-success" data-toggle="modal" data-target="#fund">Donate</a>
+
+                        <!-- Modal -->
+                        <form id="paymentForm">
+                            <div class="modal fade" id="fund" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Donate or Pay Tithe</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+
+                                            <input type="text" id="profile_id" value="<?php echo $profile_id ?>" name="client" hidden>
+                                            <input type="text" name="email" id="email" value="<?php echo $findProfile['email'] ?>" hidden>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control form-control-user" id="amount" name="amount" placeholder="Amount(NGN)...." required>
+                                            </div>
+                                            <div class="form-group">
+                                                <select name="type" id="type" class="form-control">
+                                                    <option value="Donation">Donation</option>
+                                                    <option value="Tithe">Tithe</option>
+                                                </select>
+                                            </div>
+
+                                            <script>
+                                                $(document).ready(function() {
+                                                    $('#amount').on("change blur", function() {
+                                                        var amount = $(this).val();
+                                                        $.ajax({
+                                                            url: "functions/system/converter.php",
+                                                            method: "POST",
+                                                            data: {
+                                                                amount: amount
+                                                            },
+                                                            success: function(data) {
+                                                                $('#amount').val(data);
+                                                            }
+                                                        })
+                                                    });
+
+                                                });
+                                            </script>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-primary" onclick="payWithPaystack()">Fund</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <script>
+                            const paymentForm = document.getElementById('paymentForm');
+                            paymentForm.addEventListener("submit", payWithPaystack, false);
+
+                            function payWithPaystack(e) {
+                                e.preventDefault();
+                                let handler = PaystackPop.setup({
+                                    key: 'pk_test_381f76fca3b0f850654e352c0424f2a6d78466e2', // Replace with your public key
+                                    email: document.getElementById("email").value,
+                                    payment_type: document.getElementById("payment_type").value,
+                                    profile_id: document.getElementById("profile_id").value,
+                                    amount: 100 * document.getElementById("amount").value,
+                                    ref: '' + Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
+                                    // label: "Optional string that replaces customer email"
+                                    onClose: function() {
+                                        alert('Window closed.');
+                                    },
+                                    callback: function(response) {
+                                        // let message = 'Payment complete! Reference: ' + response.reference;
+                                        // alert(message);
+                                        $.ajax({
+                                            url: 'https://members.holyfamilycclc.org/pay.php?reference=' + response.reference,
+                                            method: 'get',
+                                            success: function(response) {
+                                                // the transaction status is in response.data.status
+                                                // alert(response);
+                                                if (response == "success") {
+                                                    // alert(profile_id);
+                                                    ajaxCall2();
+                                                } else {
+                                                    location.replace("transactions.php");
+                                                }
+                                            }
+                                        });
+                                    }
+                                });
+                                handler.openIframe();
+                            }
+
+                            function ajaxCall2() {
+
+                                var payment_type = document.getElementById("payment_type").value;
+                                var profile_id = document.getElementById("profile_id").value;
+                                var amount = 100 * document.getElementById("amount").value;
+                                $.ajax({
+                                    url: 'https://members.holyfamilycclc.org/functions/operations/donate.php',
+                                    method: 'post',
+                                    data: {
+                                        amount: amount,
+                                        payment_type: payment_type,
+                                        profile_id: profile_id
+                                    },
+                                    success: function(response2) {
+                                        // the transaction status is in response.data.status
+                                        if (response2 == "success") {
+                                            location.replace("transactions.php");
+                                        }
+                                    }
+                                });
+                            }
+                        </script>
+                        <!-- /modal ends here -->
+                        <!-- </form> -->
                     </div>
                 </div>
                 <div class="card-body">
@@ -195,6 +316,7 @@ if ($findPermissions['subscriptions'] != 1) {
 
     });
 </script>
+<script src="https://js.paystack.co/v1/inline.js"></script>
 <?php
 
 include('footer.php');

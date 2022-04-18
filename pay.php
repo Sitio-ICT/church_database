@@ -7,7 +7,7 @@ $reference = $_GET['reference'];
 $curl = curl_init();
 
 curl_setopt_array($curl, array(
-    CURLOPT_URL => "https://api.paystack.co/transaction/verify/:$reference",
+    CURLOPT_URL => "https://api.paystack.co/transaction/verify/$reference",
     CURLOPT_RETURNTRANSFER => true,
     CURLOPT_ENCODING => "",
     CURLOPT_MAXREDIRS => 10,
@@ -27,5 +27,8 @@ curl_close($curl);
 if ($err) {
     echo "cURL Error #:" . $err;
 } else {
+    // echo $response;
+    $response = json_decode($response, true);
+    // ddA($response);
     echo $response['data']['status'];
 }

@@ -4,6 +4,18 @@ include('header.php');
 $usertype = "damad";
 ?>
 
+<!-- fullcalender -->
+<!-- <script src="fullcalender/main.js"></script>
+    <link rel="stylesheet" href="fullcalender/main.css"> -->
+<!-- My calender script and style -->
+<!-- Bootstrap Core CSS -->
+<link href="fullcalender/css/bootstrap.css" rel="stylesheet">
+
+<!-- FullCalendar -->
+<link href='fullcalender/css/fullcalendar.css' rel='stylesheet' />
+
+
+
 <!-- Begin Page Content -->
 <div class="container-fluid">
 

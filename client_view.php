@@ -115,13 +115,13 @@ $profile_id = $findUser['profile_id'];
                                         </div>
                                         <div class="modal-body">
 
-                                            <input type="text" id="profile_id" value="<?php echo $clientId ?>" name="client" hidden>
-                                            <input type="text" name="email" id="email" value="<?php echo $findProfile['email'] ?>" hidden>
+                                            <input type="text" name="profile_id" id="profile_id" value="<?php echo $clientId ?>" name="client" hidden>
+                                            <input type="text" name="email" id="email" value="<?php echo $findClient['email'] ?>" hidden>
                                             <div class="form-group">
                                                 <input type="number" class="form-control form-control-user" id="amount" name="amount" placeholder="Amount(NGN)...." required>
                                             </div>
                                             <div class="form-group">
-                                                <select name="type" id="type" class="form-control">
+                                                <select name="payment_type" id="payment_type" class="form-control">
                                                     <option value="Donation">Donation</option>
                                                     <option value="Tithe">Tithe</option>
                                                 </select>
@@ -148,7 +148,7 @@ $profile_id = $findUser['profile_id'];
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                            <button type="submit" class="btn btn-primary" onclick="payWithPaystack()">Fund</button>
+                                            <button type="submit" class="btn btn-primary" onclick="payWithPaystack()">Pay</button>
                                         </div>
                                     </div>
                                 </div>
@@ -163,7 +163,7 @@ $profile_id = $findUser['profile_id'];
                                 let handler = PaystackPop.setup({
                                     key: 'pk_test_381f76fca3b0f850654e352c0424f2a6d78466e2', // Replace with your public key
                                     email: document.getElementById("email").value,
-                                    type: document.getElementById("type").value,
+                                    payment_type: document.getElementById("payment_type").value,
                                     profile_id: document.getElementById("profile_id").value,
                                     amount: 100 * document.getElementById("amount").value,
                                     ref: '' + Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
@@ -175,31 +175,44 @@ $profile_id = $findUser['profile_id'];
                                         // let message = 'Payment complete! Reference: ' + response.reference;
                                         // alert(message);
                                         $.ajax({
-                                            url: 'https://https://members.holyfamilycclc.org/pay.php?reference=' + response.reference,
+                                            url: 'https://members.holyfamilycclc.org/pay.php?reference=' + response.reference,
                                             method: 'get',
                                             success: function(response) {
                                                 // the transaction status is in response.data.status
-                                                alert(response.data.status);
+                                                // alert(response);
                                                 if (response == "success") {
-                                                    $.ajax({
-                                                        url: 'https://https://members.holyfamilycclc.org/functions/operations/donate.php',
-                                                        method: 'post',
-                                                        data: {
-                                                            amount: amount,
-                                                            type: type,
-                                                            profile_id: profile_id
-                                                        },
-                                                        success: function(response) {
-                                                            // the transaction status is in response.data.status
-                                                            location.replace("transaction.php");
-                                                        }
-                                                    });
+                                                    // alert(profile_id);
+                                                    ajaxCall2();
+                                                } else {
+                                                    location.replace("transactions.php");
                                                 }
                                             }
                                         });
                                     }
                                 });
                                 handler.openIframe();
+                            }
+
+                            function ajaxCall2() {
+
+                                var payment_type = document.getElementById("payment_type").value;
+                                var profile_id = document.getElementById("profile_id").value;
+                                var amount = 100 * document.getElementById("amount").value;
+                                $.ajax({
+                                    url: 'https://members.holyfamilycclc.org/functions/operations/donate.php',
+                                    method: 'post',
+                                    data: {
+                                        amount: amount,
+                                        payment_type: payment_type,
+                                        profile_id: profile_id
+                                    },
+                                    success: function(response2) {
+                                        // the transaction status is in response.data.status
+                                        if (response2 == "success") {
+                                            location.replace("transactions.php");
+                                        }
+                                    }
+                                });
                             }
                         </script>
                         <!-- /modal ends here -->
@@ -444,7 +457,7 @@ $profile_id = $findUser['profile_id'];
                         <h6 class="m-0 font-weight-bold text-primary">Pictures</h6>
                     </div>
                     <div style="float:right">
-                        <a href="#" class="btn btn-info btn-icon-split" data-toggle="modal" data-target="#exampleModal">
+                        <a href="#" class="btn btn-info btn-icon-split" data-toggle="modal" data-target="#picture">
                             <span class="icon text-white-50">
                                 <i class="fas fa-info-circle"></i>
                             </span>
@@ -453,7 +466,7 @@ $profile_id = $findUser['profile_id'];
                     </div>
                     <!-- Modal -->
                     <form action="functions/system/image_upload.php" method="post" enctype="multipart/form-data">
-                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="picture" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -481,10 +494,7 @@ $profile_id = $findUser['profile_id'];
                     <!-- /modal ends here -->
                 </div>
                 <div class="card-body">
-                    <!-- Add fancyBox -->
-                    <link rel="stylesheet" href="assets/fancybox-2.1.7/source/jquery.fancybox.css" type="text/css" media="screen" />
-                    <script type="text/javascript" src="assets/fancybox-2.1.7/source/jquery.fancybox.js"></script>
-                    <script type="text/javascript" src="assets/fancybox-2.1.7/source/jquery.fancybox.pack.js"></script>
+
 
                     <style>
                         .fileinput .thumbnail {
@@ -625,3 +635,7 @@ $profile_id = $findUser['profile_id'];
     include('footer.php');
 
     ?>
+    <!-- Add fancyBox -->
+    <link rel="stylesheet" href="assets/fancybox-2.1.7/source/jquery.fancybox.css" type="text/css" media="screen" />
+    <script type="text/javascript" src="assets/fancybox-2.1.7/source/jquery.fancybox.js"></script>
+    <script type="text/javascript" src="assets/fancybox-2.1.7/source/jquery.fancybox.pack.js"></script>

@@ -34,21 +34,10 @@ $findPermissions = findPermissions($_SESSION['userid']);
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
     <!-- jquery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
 
     <!-- tinyMce -->
     <script src="https://cdn.tiny.cloud/1/05uzyhq8bcam7g5r97qftgykpmc0nghqqrqg1o9oeb2laxq5/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
-
-    <!-- fullcalender -->
-    <!-- <script src="fullcalender/main.js"></script>
-    <link rel="stylesheet" href="fullcalender/main.css"> -->
-    <!-- My calender script and style -->
-    <!-- Bootstrap Core CSS -->
-    <link href="fullcalender/css/bootstrap.css" rel="stylesheet">
-
-    <!-- FullCalendar -->
-    <link href='fullcalender/css/fullcalendar.css' rel='stylesheet' />
-
 
 
     <link rel="icon" type="image/png" href="uploads/logo.png" />
@@ -97,6 +86,12 @@ $findPermissions = findPermissions($_SESSION['userid']);
                 <a class="nav-link" href="calender.php">
                     <i class="fas fa-clipboard-list"></i>
                     <span>Calendar</span></a>
+            </li>
+            <!-- Nav Item - Donation/Tithe -->
+            <li class="nav-item ">
+                <a class="nav-link" href="payment.php">
+                    <i class="fas fa-dollar-sign"></i>
+                    <span>Donate/Tithe</span></a>
             </li>
             <!-- Nav Item - Transactions -->
             <li class="nav-item ">
@@ -337,7 +332,7 @@ $findPermissions = findPermissions($_SESSION['userid']);
                                 // foreach ($request as $notication) {
                                 //     $supportid = $notication['support_id'];
                                 ?>
-                                <a class="dropdown-item d-flex align-items-center" href="support_ticket.php?view=<?php echo $supportid ?>&status=1">
+                                <a class="dropdown-item d-flex align-items-center" href="#&status=1">
                                     <div class="mr-3">
                                         <div class="icon-circle bg-primary">
                                             <i class="fas fa-file-alt text-white"></i>

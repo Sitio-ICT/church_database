@@ -1,15 +1,17 @@
 <?php
 
 include('header.php');
-$digits = 7;
-$randms = str_pad(rand(0, pow(10, $digits) - 1), $digits, '0', STR_PAD_LEFT);
 
+$randms = generateRandomString(15);
+$today = date("Y-m-d");
 $findProfile = findProfile($profile_id);
 
 $response = '';
-if(isset($_GET['response'])){
+if (isset($_GET['response'])) {
     $response = $_GET['response'];
-    if ($response == 'success'){
+    $refrennce = $_GET['reference'];
+    $storePayment = makePayment($profile_id, 'Mass Booking', 0, 1000, "Mass booked $today", $today, $randms);
+    if ($response == 'success') {
         echo '
         <script type="text/javascript">
             $(document).ready(function(){
@@ -23,8 +25,8 @@ if(isset($_GET['response'])){
             });
         </script>
         ';
-    }else if($response == 'error'){
-        $deleteBooking = delete('mass_booking', $_SESSION['pay_id'], 'id' );
+    } else if ($response == 'error') {
+        $deleteBooking = delete('mass_booking', $_SESSION['pay_id'], 'id');
         echo '
         <script type="text/javascript">
             $(document).ready(function(){
@@ -53,11 +55,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $feed_created = create('mass_booking', ['person' => $person, 'mass_intention' => $mass_intention, 'status' => 0, 'profile_id' => $profile_id]);
 
     if ($feed_created) {
-        
+
         // echo "New record created successfully";
         $_SESSION['email'] = $email;
         $_SESSION['pay_id'] = $feed_created;
-        header("Location: https://paystack.com/pay/mass_booking");
+?>
+        <script>
+            location.replace("https://paystack.com/pay/mass_booking");
+        </script>
+<?php
         die();
     }
 }
@@ -82,8 +88,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <h6 class="m-0 font-weight-bold text-primary"></h6>
                 </div>
                 <div class="card-body">
-                    <form id="paymentForm">
-                        <!-- <form class="user" autocomplete="off" method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" novalidate> -->
+                    <!-- <form id="paymentForm"> -->
+                    <form class="user" autocomplete="off" method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" novalidate>
                         <div class="form-group">
                             <label for="">Person</label>
                             <input type="text" name="person" id="person" class="form-control" required value="<?php echo $findProfile['first_name'] . " " . $findProfile['middle_name'] . " " . $findProfile['last_name'] ?>" readonly>

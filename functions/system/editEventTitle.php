@@ -43,7 +43,7 @@ if (isset($_POST['delete']) && isset($_POST['id'])){
 	}
 
 }else{
-	$_SESSION["feedback"] = "Feilds can not be empty";
+	$_SESSION["feedback"] = "Fields can not be empty";
 	echo header("Location: ../../calender.php?v&message1=$randms");
 	exit();
 }

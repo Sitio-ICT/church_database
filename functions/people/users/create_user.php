@@ -84,7 +84,7 @@ if (isset($_POST['email']) && isset($_POST['firstname']) && isset($_POST['lastna
         // Send email to user with the token in a link they can click on
         $to = $email;
         $subject = "Welcome | Holy Family";
-        $msg = "Hi there $first_name $lastname, we are happy to have you join us online, click here <a href=\"https://members.holyfamilycclc.org/\">link</a> to login our.";
+        $msg = "Hi there $first_name $last_name, we are happy to have you join us online, click here <a href=\"https://members.holyfamilycclc.org/\">link</a> to login our.";
         $msg = wordwrap($msg, 70);
         $headers = "From: no-reply@holyfamilycclc.org";
         $mailed = mail($to, $subject, $msg, $headers);
