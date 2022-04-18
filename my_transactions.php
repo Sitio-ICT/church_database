@@ -3,17 +3,6 @@
 include('header.php');
 $randms = generateRandomString(5);
 
-if ($findPermissions['subscriptions'] != 1) {
-    $_SESSION["feedback"] = "You do not have permission!";
-    $_SESSION["Lack_of_intfund_$randms"] = "10";
-    // using js so as to aviod header error
-?>
-    <script>
-        location.replace("index.php?message1=<?php echo $randms ?>");
-    </script>
-<?php
-    exit();
-}
 $findUser = findUser($profile_id);
 $findClient = findProfile($findUser['profile_id']);
 
@@ -191,9 +180,9 @@ $findClient = findProfile($findUser['profile_id']);
                             </tfoot>
                             <tbody>
                                 <?php
-                                $findTransaction = findPayments();
+                                $findTransaction = findMembersPayments($profile_id);
                                 foreach ($findTransaction as $transaction) {
-                                    $profile = findProfile($transaction['profile_id']);
+                                    $profile = findProfile($profile_id);
                                 ?>
                                     <tr>
                                         <td><?php echo $profile['first_name'] . " " . $profile['middle_name'] . " " . $profile['last_name'] ?></td>
