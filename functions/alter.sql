@@ -1,4 +1,10 @@
--- 
+CREATE TABLE `church_database`.`fixed_price` ( `id` INT NOT NULL AUTO_INCREMENT , 
+`price_type` VARCHAR(15) NOT NULL , `price` DECIMAL(19,2) NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
+
+INSERT INTO `fixed_price` (`id`, `price_type`, `price`) VALUES (NULL, 'mass', '1000');
+
+-- 18th April ^
+
 CREATE TABLE `password_resets` ( `id` INT NOT NULL AUTO_INCREMENT , 
 `email` VARCHAR(60) NOT NULL , `token` VARCHAR(600) NOT NULL , 
 `date_requsted` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP , PRIMARY KEY (`id`)) ENGINE = InnoDB;
@@ -10,7 +16,7 @@ CREATE TRIGGER `format_profile_name` BEFORE INSERT ON `profile` FOR EACH ROW BEG
     SET NEW.fullname = CONCAT_WS(" ", NEW.first_name, NEW.middle_name, NEW.last_name);
   END IF;
 END
--- 3rd March
+-- 3rd March ^
 
 CREATE TABLE `church_database`.`sacraments` ( `id` INT NOT NULL AUTO_INCREMENT , 
 `tittle` VARCHAR(60) NOT NULL , `description` TEXT NOT NULL , `minimum_age` INT NOT NULL , 

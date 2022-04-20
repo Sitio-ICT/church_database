@@ -15,15 +15,15 @@ if (isset($_POST['activity_name']) && isset($_POST['color']) && isset($_POST['st
     $addEvent = insert('calendar', $eventData);
     if ($addEvent) {
         $_SESSION["feedback"] = "Event Added Successfully";
-        echo header("Location: ../../calender.php?v&message0=$randms");
+        echo header("Location: ../../calender.php?message0=$randms");
         exit();
     }else{
         $_SESSION["feedback"] = "Couldn't add Event";
-        echo header("Location: ../../calender.php?v&message1=$randms");
+        echo header("Location: ../../calender.php?message1=$randms");
         exit();
     }
 }else{
     $_SESSION["feedback"] = "Fill All required fields";
-    echo header("Location: ../../calender.php?v&message1=$randms");
+    echo header("Location: ../../calender.php?message1=$randms");
     exit();
 }

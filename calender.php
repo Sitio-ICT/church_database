@@ -236,113 +236,164 @@ $usertype = "damad";
 
 </div>
 <!-- /.container-fluid -->
+<?php
+if ($user_type == "admin") {
+?>
+    <script>
+        $(document).ready(function() {
 
-<script>
-    $(document).ready(function() {
+            $('#calendar').fullCalendar({
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'month,basicWeek,basicDay'
+                },
+                // defaultDate: '2019-07-07',
 
-        $('#calendar').fullCalendar({
-            header: {
-                left: 'prev,next today',
-                center: 'title',
-                right: 'month,basicWeek,basicDay'
-            },
-            // defaultDate: '2019-07-07',
-            editable: true,
-            eventLimit: true, // allow "more" link when too many events
-            selectable: true,
-            selectHelper: true,
-            select: function(start, end) {
+                editable: true,
+                eventLimit: true, // allow "more" link when too many events
+                selectable: true,
+                selectHelper: true,
+                select: function(start, end) {
 
-                $('#ModalAdd #start').val(moment(start).format('YYYY-MM-DD'));
-                $('#ModalAdd #end').val(moment(end).format('YYYY-MM-DD'));
-                $('#ModalAdd').modal('show');
-            },
-            eventRender: function(event, element) {
-                element.bind('dblclick', function() {
-                    $('#ModalEdit #id').val(event.id);
-                    $('#ModalEdit #title').val(event.title);
-                    $('#ModalEdit #color').val(event.color);
-                    $('#ModalEdit').modal('show');
-                });
-            },
-            eventDrop: function(event, delta, revertFunc) { // si changement de position
+                    $('#ModalAdd #start').val(moment(start).format('YYYY-MM-DD'));
+                    $('#ModalAdd #end').val(moment(end).format('YYYY-MM-DD'));
+                    $('#ModalAdd').modal('show');
+                },
+                eventRender: function(event, element) {
+                    element.bind('dblclick', function() {
+                        $('#ModalEdit #id').val(event.id);
+                        $('#ModalEdit #title').val(event.title);
+                        $('#ModalEdit #color').val(event.color);
+                        $('#ModalEdit').modal('show');
+                    });
+                },
+                eventDrop: function(event, delta, revertFunc) { // si changement de position
 
-                edit(event);
+                    edit(event);
 
-            },
-            eventResize: function(event, dayDelta, minuteDelta, revertFunc) { // si changement de longueur
+                },
+                eventResize: function(event, dayDelta, minuteDelta, revertFunc) { // si changement de longueur
 
-                edit(event);
+                    edit(event);
 
-            },
-            events: [
-                <?php
-                $events = findEvents();
-                foreach ($events as $event) :
+                },
 
-                    $start = explode(" ", $event['start_date']);
-                    $end = explode(" ", $event['end_date']);
-                    if ($start[1] == '00:00:00') {
-                        $start = $start[0];
-                    } else {
-                        $start = $event['start_date'];
-                    }
-                    if ($end[1] == '00:00:00') {
-                        $end = $end[0];
-                    } else {
-                        $end = $event['end_date'];
-                    }
-                ?> {
-                        id: '<?php echo $event['id']; ?>',
-                        title: '<?php echo $event['activity_name']; ?>',
-                        start: '<?php echo $start; ?>',
-                        end: '<?php echo $end; ?>',
-                        color: '<?php echo $event['activity_color']; ?>',
+                events: [
+                    <?php
+                    $events = findEvents();
+                    foreach ($events as $event) :
+
+                        $start = explode(" ", $event['start_date']);
+                        $end = explode(" ", $event['end_date']);
+                        if ($start[1] == '00:00:00') {
+                            $start = $start[0];
+                        } else {
+                            $start = $event['start_date'];
+                        }
+                        if ($end[1] == '00:00:00') {
+                            $end = $end[0];
+                        } else {
+                            $end = $event['end_date'];
+                        }
+                    ?> {
+                            id: '<?php echo $event['id']; ?>',
+                            title: '<?php echo $event['activity_name']; ?>',
+                            start: '<?php echo $start; ?>',
+                            end: '<?php echo $end; ?>',
+                            color: '<?php echo $event['activity_color']; ?>',
+                        },
+                    <?php endforeach; ?>
+                ]
+            });
+
+            function edit(event) {
+                start = event.start.format('YYYY-MM-DD');
+                if (event.end) {
+                    end = event.end.format('YYYY-MM-DD');
+                } else {
+                    end = start;
+                }
+
+                id = event.id;
+
+                Event = [];
+                Event[0] = id;
+                Event[1] = start;
+                Event[2] = end;
+
+                $.ajax({
+                    url: 'functions/system/editEventDate.php',
+                    type: "POST",
+                    data: {
+                        Event: Event
                     },
-                <?php endforeach; ?>
-            ]
-        });
-
-        function edit(event) {
-            start = event.start.format('YYYY-MM-DD');
-            if (event.end) {
-                end = event.end.format('YYYY-MM-DD');
-            } else {
-                end = start;
+                    success: function(rep) {
+                        if (rep == 'OK') {
+                            alert('Saved');
+                        } else {
+                            alert('Could not be saved. try again.');
+                        }
+                    }
+                });
             }
 
-            id = event.id;
+        });
 
-            Event = [];
-            Event[0] = id;
-            Event[1] = start;
-            Event[2] = end;
+        // $(function() {
+        //     $("#input").autocomplete({
+        //         source: "functions/system/search.php",
+        //     });
+        // });
+    </script>
+<?php } else { ?>
+    <script>
+        $(document).ready(function() {
 
-            $.ajax({
-                url: 'functions/system/editEventDate.php',
-                type: "POST",
-                data: {
-                    Event: Event
+            $('#calendar').fullCalendar({
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'month,basicWeek,basicDay'
                 },
-                success: function(rep) {
-                    if (rep == 'OK') {
-                        alert('Saved');
-                    } else {
-                        alert('Could not be saved. try again.');
-                    }
-                }
+                // defaultDate: '2019-07-07',
+
+                editable: false,
+                eventLimit: true, // allow "more" link when too many events
+                
+                events: [
+                    <?php
+                    $events = findEvents();
+                    foreach ($events as $event) :
+
+                        $start = explode(" ", $event['start_date']);
+                        $end = explode(" ", $event['end_date']);
+                        if ($start[1] == '00:00:00') {
+                            $start = $start[0];
+                        } else {
+                            $start = $event['start_date'];
+                        }
+                        if ($end[1] == '00:00:00') {
+                            $end = $end[0];
+                        } else {
+                            $end = $event['end_date'];
+                        }
+                    ?> {
+                            id: '<?php echo $event['id']; ?>',
+                            title: '<?php echo $event['activity_name']; ?>',
+                            start: '<?php echo $start; ?>',
+                            end: '<?php echo $end; ?>',
+                            color: '<?php echo $event['activity_color']; ?>',
+                        },
+                    <?php endforeach; ?>
+                ]
             });
-        }
 
-    });
+            
 
-    // $(function() {
-    //     $("#input").autocomplete({
-    //         source: "functions/system/search.php",
-    //     });
-    // });
-</script>
-
+        });
+    </script>
+<?php } ?>
 
 <?php
 

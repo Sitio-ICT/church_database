@@ -88,11 +88,11 @@ $findPermissions = findPermissions($_SESSION['userid']);
                     <span>Calendar</span></a>
             </li>
             <!-- Nav Item - Donation/Tithe -->
-            <li class="nav-item ">
+            <!-- <li class="nav-item ">
                 <a class="nav-link" href="payment.php">
                     <i class="fas fa-dollar-sign"></i>
                     <span>Donate/Tithe</span></a>
-            </li>
+            </li> -->
             <!-- Nav Item - Transactions -->
             <li class="nav-item ">
                 <a class="nav-link" href="my_transactions.php">
@@ -224,8 +224,8 @@ $findPermissions = findPermissions($_SESSION['userid']);
                         <div id="collapseSupport" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                             <div class="bg-white py-2 collapse-inner rounded">
                                 <h6 class="collapse-header"></h6>
-                                <a class="collapse-item" href="support.php?view=TICKET">Subscription Model</a>
-                                <a class="collapse-item" href="users.php">Users</a>
+                                <!-- <a class="collapse-item" href="subscription.php">Subscription Model</a> -->
+                                <a class="collapse-item" href="fixed_price.php">Fixed Price</a>
                             </div>
                         </div>
                     </li>

@@ -17,11 +17,11 @@ if (isset($_POST['Event'][0]) && isset($_POST['Event'][1]) && isset($_POST['Even
 
 	if (!$update) {
 		$_SESSION["feedback"] = "Could not update Date";
-        echo header("Location: ../../calender.php?v&message1=$randms");
+        echo header("Location: ../../calender.php?message1=$randms");
         exit();;
 	}else{
 		$_SESSION["feedback"] = "Event updated Successfully";
-        echo header("Location: ../../calender.php?v&message0=$randms");
+        echo header("Location: ../../calender.php?message0=$randms");
         exit();
 	}
 

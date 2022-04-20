@@ -11,6 +11,13 @@ if (isset($_GET['response'])) {
     $response = $_GET['response'];
     $refrennce = $_GET['reference'];
     $storePayment = makePayment($profile_id, 'Mass Booking', 0, 1000, "Mass booked $today", $today, $randms);
+    // Send email to user with the token in a link they can click on
+    $to = $_SESSION['email'];
+    $subject = "Mass Booking | Holy Family";
+    $msg = "Hey, <br> You just booked mass at Holy Family Church, thank you for worshiping with us, may God grant you your heart desires. Amen.";
+    $msg = wordwrap($msg, 70);
+    $headers = "From: no-reply@holyfamilycclc.org";
+    $mailed = mail($to, $subject, $msg, $headers);
     if ($response == 'success') {
         echo '
         <script type="text/javascript">

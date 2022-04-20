@@ -23,14 +23,15 @@ $findClient = findProfile($findUser['profile_id']);
                         <h6 class="m-0 font-weight-bold text-primary">Donations and Tithes</h6>
                     </div>
                     <div style="float: right;">
-                        <b>Total: <span id="total"></span></b> ||
+                        <b>Total: <span id="total"></span></b> 
+                        <!-- ||
                         <a href="#" class="btn btn-info btn-icon-split export" data-export-type="excel">
                             <span class="icon text-white-50">
                                 <i class="fas fa-download fa-sm text-white-50"></i>
                             </span>
                             <span class="text">Export EXCEL</span>
-                        </a>
-                        <a href="#" class="btn btn-success" data-toggle="modal" data-target="#fund">Donate</a>
+                        </a> -->
+                        <!-- <a href="#" class="btn btn-success" data-toggle="modal" data-target="#fund">Donate</a> -->
 
                         <!-- Modal -->
                         <form id="paymentForm">
@@ -57,24 +58,7 @@ $findClient = findProfile($findUser['profile_id']);
                                                 </select>
                                             </div>
 
-                                            <script>
-                                                $(document).ready(function() {
-                                                    $('#amount').on("change blur", function() {
-                                                        var amount = $(this).val();
-                                                        $.ajax({
-                                                            url: "functions/system/converter.php",
-                                                            method: "POST",
-                                                            data: {
-                                                                amount: amount
-                                                            },
-                                                            success: function(data) {
-                                                                $('#amount').val(data);
-                                                            }
-                                                        })
-                                                    });
-
-                                                });
-                                            </script>
+                                           
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

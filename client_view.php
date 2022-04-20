@@ -184,7 +184,7 @@ $profile_id = $findUser['profile_id'];
                                                     // alert(profile_id);
                                                     ajaxCall2();
                                                 } else {
-                                                    location.replace("transactions.php");
+                                                    location.replace("my_transactions.php");
                                                 }
                                             }
                                         });
@@ -209,7 +209,7 @@ $profile_id = $findUser['profile_id'];
                                     success: function(response2) {
                                         // the transaction status is in response.data.status
                                         if (response2 == "success") {
-                                            location.replace("transactions.php");
+                                            location.replace("my_transactions.php");
                                         }
                                     }
                                 });

@@ -905,10 +905,19 @@ function countRecords($table)
     return $result['count'];
 }
 
-function sumRecordsWhere($sum, $table, $condition, $condition2)
+function countRecordsWhere($table, $condition, $column)
 {
     global $connection;
-    $sql = "SELECT COUNT($sum) FROM $table WHERE product_name = '$condition' AND date = '$condition2'";
+    $sql = "SELECT COUNT(*) AS count FROM $table WHERE $column = '$condition'";
+    $stmt = executeQuery($sql);
+    $result = $stmt->get_result()->fetch_assoc();
+    return $result['count'];
+}
+
+function sumRecordsWhere($sum, $table, $condition)
+{
+    global $connection;
+    $sql = "SELECT COUNT($sum) FROM $table WHERE profile_id = '$condition'";
     $stmt = executeQuery($sql);
     $result = $stmt->get_result()->fetch_assoc();
     return $result["COUNT($sum)"];
@@ -1234,6 +1243,24 @@ function sumIn($sum, $table, $conditions, $notIn, $table2, $sort, $conditions2)
     }
     $sql = $sql . ")";
     $stmt = executeQuery2($sql, array_merge($conditions, $conditions2));
+    return $stmt->get_result()->fetch_assoc();
+}
+
+function sumAmount($sum, $table, $conditions)
+{
+    global $connection;
+    $sql = "SELECT SUM($sum) FROM $table";
+    $i = 0;
+    foreach ($conditions as $key => $value) {
+        if ($i === 0) {
+            $sql = $sql . " WHERE $key=?";
+        } else {
+            $sql = $sql . " AND $key=?";
+        }
+        $i++;
+    }
+    
+    $stmt = executeQuery($sql, $conditions);
     return $stmt->get_result()->fetch_assoc();
 }
 

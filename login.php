@@ -64,6 +64,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             $_SESSION["profile_id"] = $profile_id;
                             $_SESSION["username"] = $username;
                             $_SESSION["usertype"] = $user_type;
+                            $_SESSION["feedback"] = "logged in";
                             session_write_close();
 
                             // Redirect user to welcome page

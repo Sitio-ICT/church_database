@@ -32,13 +32,14 @@ if ($findPermissions['subscriptions'] != 1) {
                         <h6 class="m-0 font-weight-bold text-primary">Donations and Tithes</h6>
                     </div>
                     <div style="float: right;">
-                        <b>Total: <span id="total"></span></b> ||
-                        <a href="#" class="btn btn-info btn-icon-split export" data-export-type="excel">
+                        <b>Total: <span id="total"></span></b> 
+                        <!-- || -->
+                        <!-- <a href="#" class="btn btn-info btn-icon-split export" data-export-type="excel">
                             <span class="icon text-white-50">
                                 <i class="fas fa-download fa-sm text-white-50"></i>
                             </span>
                             <span class="text">Export EXCEL</span>
-                        </a>
+                        </a> -->
                         
                     </div>
                 </div>
