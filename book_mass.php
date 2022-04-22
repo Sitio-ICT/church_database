@@ -7,18 +7,55 @@ $today = date("Y-m-d");
 $findProfile = findProfile($profile_id);
 
 $response = '';
-if (isset($_GET['response'])) {
-    $response = $_GET['response'];
+if (isset($_GET['reference'])) {
+
     $refrennce = $_GET['reference'];
-    $storePayment = makePayment($profile_id, 'Mass Booking', 0, 1000, "Mass booked $today", $today, $randms);
-    // Send email to user with the token in a link they can click on
-    $to = $_SESSION['email'];
-    $subject = "Mass Booking | Holy Family";
-    $msg = "Hey, <br> You just booked mass at Holy Family Church, thank you for worshiping with us, may God grant you your heart desires. Amen.";
-    $msg = wordwrap($msg, 70);
-    $headers = "From: no-reply@holyfamilycclc.org";
-    $mailed = mail($to, $subject, $msg, $headers);
+    $curl = curl_init();
+
+    curl_setopt_array($curl, array(
+        CURLOPT_URL => "https://api.paystack.co/transaction/verify/$reference",
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => "",
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => "GET",
+        CURLOPT_HTTPHEADER => array(
+            "Authorization: Bearer sk_test_96566ed87155b51c96a1dc6f13f7cb4639b20130",
+            "Cache-Control: no-cache",
+        ),
+    ));
+
+    $response = curl_exec($curl);
+    $err = curl_error($curl);
+    curl_close($curl);
+
+    if ($err) {
+        $response = "cURL Error #:" . $err;
+    } else {
+        // echo $response;
+        $response = json_decode($response, true);
+        // ddA($response);
+        $rsponse = $response['data']['status'];
+    }
     if ($response == 'success') {
+        $storePayment = makePayment($profile_id, 'Mass Booking', 0, 1000, "Mass booked $today", $today, $refrennce);
+        // Send email to user with the token in a link they can click on
+        $to = $_SESSION['email'];
+        $subject = "Mass Booking | Holy Family";
+        $msg = "Hey, <br> You just booked mass at Holy Family Church, thank you for worshiping with us, may God grant you your heart desires. Amen.";
+        $msg = "
+        <html> 
+        <body> 
+            <p style=\"text-align:center;height:100px;background-color:#abc;border:1px solid #456;border-radius:3px;padding:10px;\">
+                Hey, <br> You just booked mass at Holy Family Church, thank you for worshiping with us, may God grant you your heart desires. Amen.
+            </p>
+        </body>
+        </html>";
+        $headers = "From: no-reply@holyfamilycclc.org\r\n";
+        $headers .= "Content-type: text/html\r\n";
+        $mailed = mail($to, $subject, $msg, $headers);
+
         echo '
         <script type="text/javascript">
             $(document).ready(function(){

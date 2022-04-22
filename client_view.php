@@ -21,7 +21,131 @@ $profile_id = $findUser['profile_id'];
         <div class="col-lg-12">
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Bio Info</h6>
+                    <div style="float:left">
+                        <h6 class="m-0 font-weight-bold text-primary">Bio Info</h6>
+                    </div>
+                    <div style="float:right">
+                        <?php
+                        if ($profile_id == $_SESSION['profile_id']) {
+                        ?>
+                            <a href="#" class="btn btn-success" data-toggle="modal" data-target="#fund">Donate</a>
+
+                            <!-- Modal -->
+                            <form action="functions/people/users/update_user.php" method="post" enctype="multipart/form-data">
+                                <div class="modal fade" id="fund" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Update Profile</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+
+                                                <input type="text" name="profile_id" id="profile_id" value="<?php echo $profile_id ?>" name="client" hidden>
+                                                <input type="text" name="client" id="text" value="<?php echo $clientId ?>" hidden>
+                                                <div class="form-group">
+                                                    <label for="">First name</label>
+                                                    <input type="text" id="first_name" class="form-control form-control-user" value="<?php echo $findUser['first_name'] ?>" readonly>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="">Middle name</label>
+                                                    <input type="text" id="middle_name" class="form-control form-control-user" value="<?php echo $findUser['middle_name'] ?>" readonly>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="">Last name</label>
+                                                    <input type="text" id="last_name" class="form-control form-control-user" value="<?php echo $findUser['last_name'] ?>" readonly>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="">Username</label>
+                                                    <input type="text" id="username" class="form-control form-control-user" value="<?php echo $findUser['username'] ?>" readonly>
+                                                </div>
+                                                <div id="usernamed"></div>
+                                                <div class="form-group">
+                                                    <label for="">Maiden Name</label>
+                                                    <input type="text" id="maiden_bame" class="form-control form-control-user" value="<?php echo $findUser['username'] ?>" readonly>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="">Religion</label>
+                                                    <input type="text" name="religion" class="form-control form-control-user" value="<?php echo $findClient['religion'] ?>">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="">Sex</label>
+                                                    <input type="text" name="sex" class="form-control form-control-user" value="<?php echo $findClient['sex'] ?>">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="">Date of Birth</label>
+                                                    <input type="date" name="dob" class="form-control form-control-user" value="<?php echo $findClient['d_o_b'] ?>">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="">Marital status</label>
+                                                    <input type="text" name="marital_status" class="form-control form-control-user" value="<?php echo $findClient['marital_status'] ?>">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="">Date of Wedding</label>
+                                                    <input type="date" name="dow" class="form-control form-control-user" value="<?php echo $findClient['d_o_wedding'] ?>">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="">State of origin</label>
+                                                    <input type="text" name="state" class="form-control form-control-user" value="<?php echo $findClient['state_of_origin'] ?>" readonly>
+                                                </div>
+                                                Í<div class="form-group">
+                                                    <label for="">Email</label>
+                                                    <input type="email" id="email" class="form-control form-control-user" value="<?php echo $findClient['email'] ?>" readonly>
+                                                </div>
+                                                <div id="emailed"></div>
+                                                Í<div class="form-group">
+                                                    <label for="">Phone</label>
+                                                    <input type="tel" name="phone" class="form-control form-control-user" value="<?php echo $findClient['phone_no'] ?>" readonly>
+                                                </div>
+                                                Í<div class="form-group">
+                                                    <label for="">Residential Address</label>
+                                                    <input type="email" name="address" class="form-control form-control-user" value="<?php echo $findClient['residentail_address'] ?>" readonly>
+                                                </div>
+                                                <script>
+                                                    $(document).ready(function() {
+                                                        $('#email').on("change blur click", function() {
+                                                            var email = $('#email').val();
+                                                            $.ajax({
+                                                                url: "functions/system/ajax_functions/check_email.php",
+                                                                method: "POST",
+                                                                data: {
+                                                                    email: email
+                                                                },
+                                                                success: function(data) {
+                                                                    $('#emailed').html(data);
+                                                                }
+                                                            })
+                                                        });
+
+                                                        $('#username').on("change blur click", function() {
+                                                            var username = $('#username').val();
+                                                            $.ajax({
+                                                                url: "functions/system/ajax_functions/check_username.php",
+                                                                method: "POST",
+                                                                data: {
+                                                                    username: username
+                                                                },
+                                                                success: function(data) {
+                                                                    $('#usernamed').html(data);
+                                                                }
+                                                            })
+                                                        });
+                                                    });
+                                                    // add confirm password script
+                                                </script>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-primary">Update</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        <?php } ?>
+                    </div>
                 </div>
                 <div class="card-body">
                     <!-- <form action=""> -->
