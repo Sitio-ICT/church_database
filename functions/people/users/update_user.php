@@ -3,11 +3,21 @@ include("../../methods.php");
 session_start();
 $randms = generateRandomString(7);
 
-if (isset($_POST['email']) && isset($_POST['first_name']) && isset($_POST['last_name']) && isset($_POST['username'])) {
+$clientId = $_POST['client'];
+if (isset($_POST['first_name']) && isset($_POST['last_name'])) {
     // initiialize post data
 
     $profile_id = $_POST['profile_id'];
-    $clientId = $_POST['client'];
+    if($_POST['dow'] == ""){
+        $dow = "00-00-0000";
+    }else{
+        $dow = test_input($_POST['dow']);
+    }
+    if($_POST['dob'] == ""){
+        $dob = "00-00-0000";
+    }else{
+        $dob = test_input($_POST['dob']);
+    }
     $userData = [
         'first_name' => test_input($_POST['first_name']),
         'middle_name' => test_input($_POST['middle_name']),
@@ -15,16 +25,16 @@ if (isset($_POST['email']) && isset($_POST['first_name']) && isset($_POST['last_
         'maiden_name' => test_input($_POST['maiden_name']),
         'sex' => test_input($_POST['sex']),
         'marital_status' => test_input($_POST['marital_status']),
-        'd_o_wedding' => test_input($_POST['dow']),
-        'd_o_b' => test_input($_POST['dob']),
+        'd_o_wedding' => $dow,
+        'd_o_b' => $dow,
         'state_of_origin' => test_input($_POST['state']),
         'phone_no' => test_input($_POST['phone']),
-        'email' => test_input($_POST['email']),
         'residentail_address' => test_input($_POST['address']),
         'religion' => test_input($_POST['religion'])
     ];
 
     $updateUser =  update('profile', $profile_id, 'id', $userData);
+    // dd($updateUser);
     if ($updateUser) {
         // Send email to user with the token in a link they can click on
         $to = $_POST['email'];
@@ -50,4 +60,8 @@ if (isset($_POST['email']) && isset($_POST['first_name']) && isset($_POST['last_
         echo header("Location: ../../../client_view.php?view=$clientId&message1=$randms");
         exit();
     }
+}else{
+    $_SESSION["feedback"] = "Fill in all required fields";
+    echo header("Location: ../../../client_view.php?view=$clientId&message1=$randms");
+    exit();
 }

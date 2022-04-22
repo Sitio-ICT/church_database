@@ -28,11 +28,11 @@ $profile_id = $findUser['profile_id'];
                         <?php
                         if ($profile_id == $_SESSION['profile_id']) {
                         ?>
-                            <a href="#" class="btn btn-success" data-toggle="modal" data-target="#fund">Donate</a>
+                            <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#editClient">Edit User</a>
 
                             <!-- Modal -->
                             <form action="functions/people/users/update_user.php" method="post" enctype="multipart/form-data">
-                                <div class="modal fade" id="fund" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal fade" id="editClient" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
@@ -47,32 +47,43 @@ $profile_id = $findUser['profile_id'];
                                                 <input type="text" name="client" id="text" value="<?php echo $clientId ?>" hidden>
                                                 <div class="form-group">
                                                     <label for="">First name</label>
-                                                    <input type="text" id="first_name" class="form-control form-control-user" value="<?php echo $findUser['first_name'] ?>" readonly>
+                                                    <input type="text" name="first_name" class="form-control form-control-user" value="<?php echo $findClient['first_name'] ?>">
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="">Middle name</label>
-                                                    <input type="text" id="middle_name" class="form-control form-control-user" value="<?php echo $findUser['middle_name'] ?>" readonly>
+                                                    <input type="text" name="middle_name" class="form-control form-control-user" value="<?php echo $findClient['middle_name'] ?>">
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="">Last name</label>
-                                                    <input type="text" id="last_name" class="form-control form-control-user" value="<?php echo $findUser['last_name'] ?>" readonly>
+                                                    <input type="text" name="last_name" class="form-control form-control-user" value="<?php echo $findClient['last_name'] ?>">
                                                 </div>
-                                                <div class="form-group">
+                                                <!-- <div class="form-group">
                                                     <label for="">Username</label>
-                                                    <input type="text" id="username" class="form-control form-control-user" value="<?php echo $findUser['username'] ?>" readonly>
+                                                    <input type="text" id="username" class="form-control form-control-user" value="<?php //echo $findUser['username'] 
+                                                                                                                                    ?>" readonly>
                                                 </div>
-                                                <div id="usernamed"></div>
+                                                <div id="usernamed"></div> -->
                                                 <div class="form-group">
                                                     <label for="">Maiden Name</label>
-                                                    <input type="text" id="maiden_bame" class="form-control form-control-user" value="<?php echo $findUser['username'] ?>" readonly>
+                                                    <input type="text" name="maiden_bame" class="form-control form-control-user" value="<?php echo $findClient['maiden_name'] ?>">
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="">Religion</label>
-                                                    <input type="text" name="religion" class="form-control form-control-user" value="<?php echo $findClient['religion'] ?>">
+                                                    <select name="religion" class="form-control">
+                                                        <option value="<?php echo $findClient['religion'] ?>"><?php echo $findClient['religion'] ?></option>
+                                                        <option value="Christainity">Christainity</option>
+                                                        <option value="Islam">Islam</option>
+                                                        <option value="Traditional">Traditional</option>
+                                                        <option value="Others">Others</option>
+                                                    </select>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="">Sex</label>
-                                                    <input type="text" name="sex" class="form-control form-control-user" value="<?php echo $findClient['sex'] ?>">
+                                                    <select name="sex" class="form-control">
+                                                        <option value="<?php echo $findClient['sex'] ?>"><?php echo $findClient['sex'] ?></option>
+                                                        <option value="Male">Male</option>
+                                                        <option value="Female">Female</option>
+                                                    </select>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="">Date of Birth</label>
@@ -80,7 +91,13 @@ $profile_id = $findUser['profile_id'];
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="">Marital status</label>
-                                                    <input type="text" name="marital_status" class="form-control form-control-user" value="<?php echo $findClient['marital_status'] ?>">
+                                                    <select name="marital_status" class="form-control">
+                                                        <option value="<?php echo $findClient['marital_status'] ?>"><?php echo $findClient['marital_status'] ?></option>
+                                                        <option value="Single">Single</option>
+                                                        <option value="Married">Married</option>
+                                                        <option value="Seperated">Seperated</option>
+                                                        <option value="Divorced">Divorced</option>
+                                                    </select>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="">Date of Wedding</label>
@@ -88,22 +105,18 @@ $profile_id = $findUser['profile_id'];
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="">State of origin</label>
-                                                    <input type="text" name="state" class="form-control form-control-user" value="<?php echo $findClient['state_of_origin'] ?>" readonly>
-                                                </div>
-                                                Í<div class="form-group">
-                                                    <label for="">Email</label>
-                                                    <input type="email" id="email" class="form-control form-control-user" value="<?php echo $findClient['email'] ?>" readonly>
+                                                    <input type="text" name="state" class="form-control form-control-user" value="<?php echo $findClient['state_of_origin'] ?>">
                                                 </div>
                                                 <div id="emailed"></div>
-                                                Í<div class="form-group">
+                                                <div class="form-group">
                                                     <label for="">Phone</label>
-                                                    <input type="tel" name="phone" class="form-control form-control-user" value="<?php echo $findClient['phone_no'] ?>" readonly>
+                                                    <input type="tel" name="phone" class="form-control form-control-user" value="<?php echo $findClient['phone_no'] ?>">
                                                 </div>
-                                                Í<div class="form-group">
+                                                <div class="form-group">
                                                     <label for="">Residential Address</label>
-                                                    <input type="email" name="address" class="form-control form-control-user" value="<?php echo $findClient['residentail_address'] ?>" readonly>
+                                                    <input type="text" name="address" class="form-control form-control-user" value="<?php echo $findClient['residentail_address'] ?>">
                                                 </div>
-                                                <script>
+                                                <!-- <script>
                                                     $(document).ready(function() {
                                                         $('#email').on("change blur click", function() {
                                                             var email = $('#email').val();
@@ -134,7 +147,7 @@ $profile_id = $findUser['profile_id'];
                                                         });
                                                     });
                                                     // add confirm password script
-                                                </script>
+                                                </script> -->
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -352,10 +365,72 @@ $profile_id = $findUser['profile_id'];
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
                     <div style="float:left">
-                        <h6 class="m-0 font-weight-bold text-primary">Transactions</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">Relationships</h6>
                     </div>
                     <div style="float:right">
+                        <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#addRelationship">Add Relationship</a>
 
+                        <!-- Modal -->
+                        <form action="functions/people/users/add_relationship.php" method="post" enctype="multipart/form-data">
+                            <div class="modal fade" id="addRelationship" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Update Profile</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+
+                                            <input type="text" name="profile_id" id="profile_id" value="<?php echo $profile_id ?>" name="client" hidden>
+                                            <input type="text" name="client" id="text" value="<?php echo $clientId ?>" hidden>
+                                            <div class="form-group">
+                                                <label for="">Member</label>
+                                                <i class="small">Insert the person's name or registration no</i>
+                                                <input type="text" name="indetifier" id="identifier" class="form-control">
+                                            </div>
+                                            <div id="member"></div>
+                                            <div class="form-group">
+                                                <label for="">Relationship</label>
+                                                <select name="realationship" class="form-control">
+                                                    <option value="Wife">Wife</option>
+                                                    <option value="Husband">Husband</option>
+                                                    <option value="Brother">Brother</option>
+                                                    <option value="Sister">Sister</option>
+                                                    <option value="Son">Son</option>
+                                                    <option value="Daughter">Daughter</option>
+                                                    <option value="Aunt">Aunt</option>
+                                                    <option value="Uncle">Uncle</option>
+                                                </select>
+                                            </div>
+                                            <script>
+                                                $(document).ready(function() {
+                                                    $('#identifier').on("keyup change blur", function() {
+                                                        var identifier = $(this).val();
+                                                        $.ajax({
+                                                            url: "functions/system/ajax_functions/members.php",
+                                                            method: "POST",
+                                                            data: {
+                                                                identifier: identifier
+                                                            },
+                                                            success: function(data) {
+                                                                $('#member').html(data);
+                                                            }
+                                                        })
+                                                    });
+
+                                                });
+                                            </script>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-primary">Update</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
                 <div class="card-body">
@@ -366,6 +441,7 @@ $profile_id = $findUser['profile_id'];
                                 <tr>
                                     <th>Relationship</th>
                                     <th>Person</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tfoot>
@@ -373,6 +449,7 @@ $profile_id = $findUser['profile_id'];
                                 <tr>
                                     <th>Relationship</th>
                                     <th>Person</th>
+                                    <th></th>
                                 </tr>
 
                             </tfoot>
@@ -383,14 +460,14 @@ $profile_id = $findUser['profile_id'];
                                 ?>
                                     <tr>
 
-                                        <td><?php echo $relations['relatioship_type'] ?></td>
+                                        <td><?php echo $relations['relationship_type'] ?></td>
                                         <td>
                                             <?php
                                             $findPerson = findProfile($relations['related_to']);
                                             echo $findPerson['first_name'] . " " . $findPerson['middle_name'] . " " . $findPerson['last_name'];
                                             ?>
                                         </td>
-
+                                        <td><a href="functions/people/users/delete_relationship.php?relation=<?php echo $relations['id'] ?>&client_id=<?php echo $clientId ?>" class="btn btn-danger">Delete</a></td>
                                     </tr>
                                 <?php
                                 }
