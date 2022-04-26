@@ -28,6 +28,13 @@ if (isset($_POST['email']) && isset($_POST['firstname']) && isset($_POST['lastna
     $createUser =  createUser($username, $passkey, $first_name, $last_name, $email, 'user');
     echo $createUser['status'];
     if ($createUser['status'] != "success") {
+        
+        $error = $createUser['error'];
+        $_SESSION["feedback"] = "Sorry could not create User! - $error";
+        $_SESSION["Lack_of_intfund_$randms"] = "10";
+        echo header("Location: ../../../register.php?message1=$randms");
+        exit();
+    } else {
         // Send email to user with the token in a link they can click on
         $to = $email;
         $subject = "Welcome | Holy Family";
@@ -45,12 +52,6 @@ if (isset($_POST['email']) && isset($_POST['firstname']) && isset($_POST['lastna
         $headers .= "Content-type: text/html\r\n";
         $mailed = mail($to, $subject, $msg, $headers);
 
-        $error = $createUser['error'];
-        $_SESSION["feedback"] = "Sorry could not create User! - $error";
-        $_SESSION["Lack_of_intfund_$randms"] = "10";
-        echo header("Location: ../../../register.php?message1=$randms");
-        exit();
-    } else {
         $_SESSION["feedback"] = "Your account was Successfuly created";
         $_SESSION["Lack_of_intfund_$randms"] = "10";
         echo header("Location: ../../../register.php?message0=$randms");

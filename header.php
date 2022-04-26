@@ -81,6 +81,13 @@ $findPermissions = findPermissions($_SESSION['userid']);
                 Profile
             </div>
 
+            <!-- Nav Item - Profile -->
+            <li class="nav-item ">
+                <a class="nav-link" href="client_view.php?view=<?php echo $_SESSION['userid'] ?>">
+                    <i class="fas fa-user"></i>
+                    <span>Profile Info</span></a>
+            </li>
+
             <!-- Nav Item - Calendar -->
             <li class="nav-item ">
                 <a class="nav-link" href="calender.php">
@@ -88,11 +95,17 @@ $findPermissions = findPermissions($_SESSION['userid']);
                     <span>Calendar</span></a>
             </li>
             <!-- Nav Item - Donation/Tithe -->
-            <!-- <li class="nav-item ">
+            <li class="nav-item ">
                 <a class="nav-link" href="payment.php">
                     <i class="fas fa-dollar-sign"></i>
-                    <span>Donate/Tithe</span></a>
-            </li> -->
+                    <span>Payments</span></a>
+            </li>
+            <!-- Nav Item - Book Mass -->
+            <li class="nav-item ">
+                <a class="nav-link" href="book_mass.php">
+                    <i class="fas fa-clipboard-list"></i>
+                    <span>Book Mass</span></a>
+            </li>
             <!-- Nav Item - Transactions -->
             <li class="nav-item ">
                 <a class="nav-link" href="my_transactions.php">
@@ -105,18 +118,14 @@ $findPermissions = findPermissions($_SESSION['userid']);
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Organizations</span></a>
             </li>
-            <!-- Nav Item - Book Mass -->
+            <!-- Nav Item - Organizations -->
             <li class="nav-item ">
-                <a class="nav-link" href="book_mass.php">
-                    <i class="fas fa-clipboard-list"></i>
-                    <span>Book Mass</span></a>
+                <a class="nav-link" href="record_sacrament.php">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Record Sacrament</span></a>
             </li>
-            <!-- Nav Item - Support -->
-            <li class="nav-item ">
-                <a class="nav-link" href="client_view.php?view=<?php echo $_SESSION['userid'] ?>">
-                    <i class="fas fa-user"></i>
-                    <span>Profile</span></a>
-            </li>
+            
+            
 
 
             <!-- Divider -->

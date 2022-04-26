@@ -1,3 +1,7 @@
+
+ALTER TABLE `profile` ADD `phone_no2` VARCHAR(15) NOT NULL AFTER `phone_no`;
+-- 
+
 CREATE TABLE `church_database`.`fixed_price` ( `id` INT NOT NULL AUTO_INCREMENT , 
 `price_type` VARCHAR(15) NOT NULL , `price` DECIMAL(19,2) NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
 

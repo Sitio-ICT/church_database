@@ -9,13 +9,14 @@ if ($_POST['sacrament'] != "") {
 ?>
         <button type="submit" class="btn btn-primary">Record Sacrament Received</button>
     <?php
-    } else
+    } else {
     ?>
-    <p>Can't receive this Sacrament more than Once</p>
-    <button type="submit" disabled class="btn btn-primary">Record Sacrament Received</button>
-<?php
+        <p>Can't receive this Sacrament more than Once</p>
+        <button type="submit" disabled class="btn btn-primary">Record Sacrament Received</button>
+    <?php
+    }
 } else {
-?>
+    ?>
     <button type="submit" disabled class="btn btn-primary">Record Sacrament Received</button>
 <?php
 }

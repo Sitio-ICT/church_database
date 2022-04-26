@@ -18,20 +18,22 @@ $findClient = findProfile($findUser['profile_id']);
         <div class="col-lg-6">
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Transaction</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">Payments</h6>
                 </div>
                 <div class="card-body">
                     <form id="paymentForm">
 
                         <input type="text" id="profile_id" value="<?php echo $profile_id ?>" name="client" hidden>
-                        <input type="text" name="email" id="email" value="<?php echo $findProfile['email'] ?>" hidden>
+                        <input type="text" name="email" id="email" value="<?php echo $findClient['email'] ?>" hidden>
                         <div class="form-group">
                             <input type="number" class="form-control form-control-user" id="amount" name="amount" placeholder="Amount(NGN)...." required>
                         </div>
                         <div class="form-group">
-                            <select name="type" id="type" class="form-control">
+                            <select name="type" id="payment_type" class="form-control">
                                 <option value="Donation">Donation</option>
                                 <option value="Tithe">Tithe</option>
+                                <option value="Harvest">Harvest</option>
+                                <option value="Project">Project</option>
                             </select>
                         </div>
 

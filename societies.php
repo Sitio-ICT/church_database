@@ -9,10 +9,10 @@ include('header.php');
 //     $_SESSION["Lack_of_intfund_$randms"] = "10";
 //     // using js so as to aviod header error
 // ?>
-//     <script>
+    <script>
         // location.replace("index.php?message1=<?php //echo $randms ?>");
 //     </script>
-// <?php
+ <?php
 //     exit();
 // }
 
