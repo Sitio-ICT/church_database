@@ -1,4 +1,10 @@
 
+ALTER TABLE `mass_booking` ADD `day` VARCHAR(10) NOT NULL AFTER `person`, ADD `mass_time` VARCHAR(5) NOT NULL AFTER `day`;
+ALTER TABLE `organization` ADD `meeting_time` VARCHAR(10) NOT NULL AFTER `re_occurance`;
+ALTER TABLE `organization` CHANGE `meeting_time` `meeting_time` TIME NOT NULL;
+
+--- 8th May^
+
 ALTER TABLE `profile` ADD `phone_no2` VARCHAR(15) NOT NULL AFTER `phone_no`;
 -- 
 

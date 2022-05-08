@@ -394,7 +394,7 @@ $profile_id = $findUser['profile_id'];
                                             <input type="text" name="client" id="text" value="<?php echo $clientId ?>" hidden>
                                             <div class="form-group">
                                                 <label for="">Member</label>
-                                                <i class="small">Insert the person's name or registration no</i>
+                                                <i class="small">Insert the person registration no</i>
                                                 <input type="text" name="indetifier" id="identifier" class="form-control">
                                             </div>
                                             <div id="member"></div>

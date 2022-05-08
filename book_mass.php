@@ -6,111 +6,6 @@ $randms = generateRandomString(15);
 $today = date("Y-m-d");
 $findProfile = findProfile($profile_id);
 
-// $response = '';
-// if (isset($_GET['reference'])) {
-
-//     $refrennce = $_GET['reference'];
-//     $curl = curl_init();
-
-//     curl_setopt_array($curl, array(
-//         CURLOPT_URL => "https://api.paystack.co/transaction/verify/$reference",
-//         CURLOPT_RETURNTRANSFER => true,
-//         CURLOPT_ENCODING => "",
-//         CURLOPT_MAXREDIRS => 10,
-//         CURLOPT_TIMEOUT => 30,
-//         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-//         CURLOPT_CUSTOMREQUEST => "GET",
-//         CURLOPT_HTTPHEADER => array(
-//             "Authorization: Bearer sk_test_96566ed87155b51c96a1dc6f13f7cb4639b20130",
-//             "Cache-Control: no-cache",
-//         ),
-//     ));
-
-//     $response = curl_exec($curl);
-//     $err = curl_error($curl);
-//     curl_close($curl);
-
-//     if ($err) {
-//         $response = "cURL Error #:" . $err;
-//     } else {
-//         // echo $response;
-//         $response = json_decode($response, true);
-//         // ddA($response);
-//         $rsponse = $response['data']['status'];
-//     }
-//     if ($response == 'success') {
-//         $storePayment = makePayment($profile_id, 'Mass Booking', 0, 1000, "Mass booked $today", $today, $refrennce);
-//         // Send email to user with the token in a link they can click on
-//         $to = $_SESSION['email'];
-//         $subject = "Mass Booking | Holy Family";
-//         $msg = "Hey, <br> You just booked mass at Holy Family Church, thank you for worshiping with us, may God grant you your heart desires. Amen.";
-//         $msg = "
-//         <html> 
-//         <body> 
-//             <p style=\"text-align:center;height:100px;background-color:#abc;border:1px solid #456;border-radius:3px;padding:10px;\">
-//                 Hey, <br> You just booked mass at Holy Family Church, thank you for worshiping with us, may God grant you your heart desires. Amen.
-//             </p>
-//         </body>
-//         </html>";
-//         $headers = "From: no-reply@holyfamilycclc.org\r\n";
-//         $headers .= "Content-type: text/html\r\n";
-//         $mailed = mail($to, $subject, $msg, $headers);
-
-//         echo '
-//         <script type="text/javascript">
-//             $(document).ready(function(){
-//                 swal({
-//                     icon: "success",
-//                     title: "Success",
-//                     text: "Mass Booked Successfully!",
-//                     button: true,
-//                     timer: 3000
-//                 });
-//             });
-//         </script>
-//         ';
-//     } else if ($response == 'error') {
-//         $deleteBooking = delete('mass_booking', $_SESSION['pay_id'], 'id');
-//         echo '
-//         <script type="text/javascript">
-//             $(document).ready(function(){
-//                 swal({
-//                     icon: "error",
-//                     title: "Error",
-//                     text: "Mass not Booked!",
-//                     button: true,
-//                     timer: 3000
-//                 });
-//             });
-//         </script>
-//         ';
-//     }
-// }
-
-// // Processing form data when form is submitted
-// if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
-//     $person = test_input($_POST['person']);
-//     $mass_intention = test_input($_POST['mass_intention']);
-//     $email = test_input($_POST['email']);
-
-
-//     // create feed
-//     $feed_created = create('mass_booking', ['person' => $person, 'mass_intention' => $mass_intention, 'status' => 0, 'profile_id' => $profile_id]);
-
-//     if ($feed_created) {
-
-//         // echo "New record created successfully";
-//         $_SESSION['email'] = $email;
-//         $_SESSION['pay_id'] = $feed_created;
-// ?>
-         <script>
-//             location.replace("https://paystack.com/pay/mass_booking");
-//         </script>
- <?php
-//         die();
-//     }
-// }
 
 ?>
 <script>
@@ -155,11 +50,21 @@ $findProfile = findProfile($profile_id);
                             <textarea name="mass_intention" class="form-control" id="mass_intention" cols="30" rows="10" required></textarea>
                         </div>
                         <div class="form-group">
+                            <label for="">Day</label>
+                            <select name="day" id="day" class="form-control" required>
+                                <option value="">....</option>
+                                <option value="Weekdays">Weekdays</option>
+                                <option value="Sunday">Sunday</option>
+                            </select>
+                        </div>
+                        <div id="timed"></div>
+                        <div class="form-group">
                             <input type="number" class="form-control form-control-user" id="amount" name="amount" placeholder="Amount(NGN)...." required>
                         </div>
                         <div id="amountmin"></div>
                         <script>
                             $(document).ready(function() {
+                               
                                 $('#amount').on("change blur", function() {
                                     var amount = $(this).val();
                                     $.ajax({
@@ -170,6 +75,20 @@ $findProfile = findProfile($profile_id);
                                         },
                                         success: function(data) {
                                             $('#amountmin').html(data);
+                                        }
+                                    })
+                                });
+
+                                $('#day').on("change blur", function() {
+                                    var day = $(this).val();
+                                    $.ajax({
+                                        url: "functions/system/ajax_functions/mass_time.php",
+                                        method: "POST",
+                                        data: {
+                                            day: day
+                                        },
+                                        success: function(data) {
+                                            $('#timed').html(data);
                                         }
                                     })
                                 });
@@ -235,6 +154,8 @@ $findProfile = findProfile($profile_id);
                             var email = document.getElementById("email").value;
                             var person = document.getElementById("person").value;
                             var profile_id = document.getElementById("profile_id").value;
+                            var day = document.getElementById("day").value;
+                            var time = document.getElementById("time").value;
                             var amount = 100 * document.getElementById("amounted").value;
                             $.ajax({
                                 url: 'https://members.holyfamilycclc.org/functions/operations/add_mass.php',
@@ -244,6 +165,8 @@ $findProfile = findProfile($profile_id);
                                     mass_intention: mass_intention,
                                     profile_id: profile_id,
                                     person: person,
+                                    day: day,
+                                    time: time,
                                     email: email
                                 },
                                 success: function(response2) {

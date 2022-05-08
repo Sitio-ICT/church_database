@@ -91,6 +91,10 @@ include('header.php');
                                                         <option value="Fourth">Fourth</option>
                                                     </select>
                                                 </div>
+                                                <div class="form-group">
+                                                    <label for="">Meeting Time</label>
+                                                    <input type="time" name="time" class="form-control" required>
+                                                </div>
 
                                             </div>
 

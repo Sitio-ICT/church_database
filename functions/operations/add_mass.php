@@ -10,11 +10,13 @@ if (isset($_POST['person']) && isset($_POST['mass_intention'])) {
 
     $person = test_input($_POST['person']);
     $mass_intention = test_input($_POST['mass_intention']);
+    $day = test_input($_POST['day']);
+    $time = test_input($_POST['time']);
     $profile_id = test_input($_POST['profile_id']);
     $amount = $_POST['amount'] / 100;
 
     // create feed
-    $feed_created = create('mass_booking', ['person' => $person, 'mass_intention' => $mass_intention, 'status' => 0, 'profile_id' => $profile_id]);
+    $feed_created = create('mass_booking', ['person' => $person, 'mass_intention' => $mass_intention, 'day' => $day, 'mass_time' => $time, 'status' => 0, 'profile_id' => $profile_id]);
 
     if ($feed_created) {
         $storePayment = makePayment($profile_id, 'Mass Booking', 0, $amount, "Mass booked $today", $today, $randms);

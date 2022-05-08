@@ -34,14 +34,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Validate credentials
     if (empty($email_err) && empty($password_err)) {
         // Prepare a select statement
-        $sql = "SELECT id, username, passkey, profile_id, user_type FROM users WHERE username = ?";
+        $sql = "SELECT users.id, users.username, users.passkey, users.profile_id, users.user_type FROM users JOIN profile ON users.username = ? OR profile.email = ? WHERE users.profile_id = profile.id";
 
         if ($stmt = mysqli_prepare($connection, $sql)) {
             // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "s", $param_username);
+            mysqli_stmt_bind_param($stmt, "ss", $param_username, $param_email);
 
             // Set parameters
-            $param_username = $email;
+            $param_username = $username;
+            $param_email = $email;
 
             // Attempt to execute the prepared statement
             if (mysqli_stmt_execute($stmt)) {

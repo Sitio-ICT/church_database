@@ -21,18 +21,22 @@ $findOrganisation = findOrganization($_GET['view']);
                 </div>
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-lg-6">
+                        <div class="col-lg-12">
                             <p>
                                 <?php echo $findOrganisation['description'] ?>
                             </p>
                             <div class="form-group row">
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
                                     <label for="">Reoccurence</label>
                                     <input type="text" class="form-control" value="<?php echo $findOrganisation['re_occurance'] ?>" readonly>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
                                     <label for="">Metting Days</label>
                                     <input type="text" class="form-control" value="<?php echo $findOrganisation['meeting_days'] ?>" readonly>
+                                </div>
+                                <div class="col-lg-4">
+                                    <label for="">Metting Time</label>
+                                    <input type="text" class="form-control" value="<?php echo $findOrganisation['meeting_time'] ?>" readonly>
                                 </div>
                             </div>
                         </div>

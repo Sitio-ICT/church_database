@@ -31,6 +31,8 @@ $findClient = findProfile($findUser['profile_id']);
                         <div class="form-group">
                             <select name="type" id="payment_type" class="form-control">
                                 <option value="Donation">Donation</option>
+                                <option value="Thanksgivivng">Thansksgiving</option>
+                                <option value="SMA">SMA - Mission Support</option>
                                 <option value="Tithe">Tithe</option>
                                 <option value="Harvest">Harvest</option>
                                 <option value="Project">Project</option>

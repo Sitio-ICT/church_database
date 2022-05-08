@@ -215,7 +215,7 @@ function findOrganization($organization_id)
 }
 
 
-function createOrganizations($org_name, $description, $type, $meeting_days, $re_occurance)
+function createOrganizations($org_name, $description, $type, $meeting_days, $re_occurance, $time)
 {
     global $connection;
     $organizationData = [
@@ -223,7 +223,8 @@ function createOrganizations($org_name, $description, $type, $meeting_days, $re_
         'description' => $description,
         'type' => $type,
         'meeting_days' => $meeting_days,
-        're_occurance' => $re_occurance
+        're_occurance' => $re_occurance,
+        'meeting_time' => $time
     ];
 
     $createOrganization = insert('organization', $organizationData);
