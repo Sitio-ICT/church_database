@@ -6,6 +6,11 @@ session_start();
 if (isset($_POST['day'])) {
     if ($_POST['day'] == "Weekdays") {
 ?>
+        <div></div>
+    <?php
+    }
+    if ($_POST['day'] == "Weekdays") {
+    ?>
         <div class="form-group">
             <label for="">Time</label>
             <select name="time" id="time" class="form-control" required>

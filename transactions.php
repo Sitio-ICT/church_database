@@ -33,13 +33,13 @@ if ($findPermissions['subscriptions'] != 1) {
                     </div>
                     <div style="float: right;">
                         <b>Total: <span id="total"></span></b> 
-                        <!-- || -->
-                        <!-- <a href="#" class="btn btn-info btn-icon-split export" data-export-type="excel">
+                        ||
+                        <a href="#" class="btn btn-info btn-icon-split export" data-export-type="excel">
                             <span class="icon text-white-50">
                                 <i class="fas fa-download fa-sm text-white-50"></i>
                             </span>
                             <span class="text">Export EXCEL</span>
-                        </a> -->
+                        </a>
                         
                     </div>
                 </div>
@@ -82,9 +82,9 @@ if ($findPermissions['subscriptions'] != 1) {
                                         <td><?php echo $profile['first_name'] . " " . $profile['middle_name'] . " " . $profile['last_name'] ?></td>
                                         <td><?php echo $transaction['payment_type'] ?></td>
                                         <td><?php echo number_format($transaction['amount'], 2) ?></td>
-                                        <th><?php echo $transaction['transaction_date'] ?></th>
-                                        <th><?php echo $transaction['transaction_id'] ?></th>
-                                        <th><?php echo $transaction['description'] ?></th>
+                                        <td><?php echo $transaction['transaction_date'] ?></td>
+                                        <td><?php echo $transaction['transaction_id'] ?></td>
+                                        <td><?php echo $transaction['description'] ?></td>
 
                                     </tr>
                                 <?php
@@ -188,6 +188,16 @@ if ($findPermissions['subscriptions'] != 1) {
                 evt.cancelBubble = true;
             }
         }
+        $(".export").click(function() {
+            var export_type = $(this).data('export-type');
+            $('#dataTable2').tableExport({
+                type: export_type,
+                escape: 'false',
+                ignoreColumn: []
+            });
+        });
+
+        // export table
         $(".export").click(function() {
             var export_type = $(this).data('export-type');
             $('#dataTable2').tableExport({

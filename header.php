@@ -11,6 +11,8 @@ $profile_id = $_SESSION['profile_id'];
 $user_type = $_SESSION['usertype'];
 // find admin permissions
 $findPermissions = findPermissions($_SESSION['userid']);
+// find propfile picture
+$findClient = findProfile($profile_id);
 ?>
 
 <!DOCTYPE html>
@@ -124,8 +126,8 @@ $findPermissions = findPermissions($_SESSION['userid']);
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Record Sacrament</span></a>
             </li>
-            
-            
+
+
 
 
             <!-- Divider -->
@@ -319,9 +321,9 @@ $findPermissions = findPermissions($_SESSION['userid']);
 
                                 // if ($totalAlerts > 0) {
                                 ?>
-                                <i class="fas fa-bell fa-fw" style="color:red"></i>
+                                <!-- <i class="fas fa-bell fa-fw" style="color:red"></i>
                                 <span class="badge badge-danger badge-counter">0<?php //echo $totalAlerts  
-                                                                                ?></span>
+                                                                                ?></span> -->
                                 <?php
                                 // } else {
                                 ?>
@@ -333,7 +335,7 @@ $findPermissions = findPermissions($_SESSION['userid']);
                             </a>
 
                             <!-- Dropdown - Alerts -->
-                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
+                            <!-- <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
                                 <h6 class="dropdown-header">
                                     Alerts Center
                                 </h6>
@@ -385,7 +387,7 @@ $findPermissions = findPermissions($_SESSION['userid']);
                                 // }
                                 ?>
                                 <a class="dropdown-item text-center small text-gray-500" href="#">As at Today - <span class="font-weight-bold"><?php echo date('Y-M-d') ?></span></a>
-                            </div>
+                            </div> -->
                         </li>
 
 
@@ -396,7 +398,11 @@ $findPermissions = findPermissions($_SESSION['userid']);
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php //echo $_SESSION['username'] 
                                                                                             ?></span>
-                                <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
+                                <?php if ($findClient['image'] == "") { ?>
+                                    <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
+                                <?php } else { ?>
+                                    <img class="img-profile rounded-circle" src="img/members/profile_pic/<?php echo $findClient['image'] ?>">
+                                <?php } ?>
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">

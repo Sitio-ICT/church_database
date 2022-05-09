@@ -1,3 +1,5 @@
+ALTER TABLE `mass_booking` ADD `day_booked` DATE NOT NULL DEFAULT CURRENT_TIMESTAMP AFTER `status`;
+-- 9th May^
 
 ALTER TABLE `mass_booking` ADD `day` VARCHAR(10) NOT NULL AFTER `person`, ADD `mass_time` VARCHAR(5) NOT NULL AFTER `day`;
 ALTER TABLE `organization` ADD `meeting_time` VARCHAR(10) NOT NULL AFTER `re_occurance`;

@@ -18,7 +18,7 @@ if ($findPermissions['mass_booking'] != 1) {
 
 // Processing form data when form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    
+
     $person = test_input($_POST['person']);
     $mass_intention = test_input($_POST['mass_intention']);
     // $profile_id = test_input($_POST['profile_id']);
@@ -46,8 +46,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 ?>
 <script>
-    if ( window.history.replaceState ) {
-        window.history.replaceState( null, null, window.location.href );
+    if (window.history.replaceState) {
+        window.history.replaceState(null, null, window.location.href);
     }
 </script>
 <!-- Begin Page Content -->
@@ -62,7 +62,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="col-lg-12">
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Mass Bookings</h6>
+                    <div style="float: left;">
+                        <h6 class="m-0 font-weight-bold text-primary">Mass Bookings</h6>
+                    </div>
+                    <div style="float: right;">
+                        <!-- <b>Total: <span id="total"></span></b> 
+                        || -->
+                        <a href="#" class="btn btn-info btn-icon-split export" data-export-type="excel">
+                            <span class="icon text-white-50">
+                                <i class="fas fa-download fa-sm text-white-50"></i>
+                            </span>
+                            <span class="text">Export EXCEL</span>
+                        </a>
+
+                    </div>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -71,6 +84,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <tr>
                                     <th>Booked By</th>
                                     <th>Mass Intention</th>
+                                    <th>Day</th>
+                                    <th>Time</th>
+                                    <th>Date booked</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -81,6 +97,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     <tr>
                                         <td><?php echo strtoupper($feed['person']); ?></td>
                                         <td><?php echo $feed['mass_intention'] ?></td>
+                                        <td><?php echo $feed['day'] ?></td>
+                                        <td><?php echo $feed['mass_time'] ?></td>
+                                        <td><?php echo $feed['day_booked'] ?></td>
                                     </tr>
                                 <?php
                                 }
@@ -97,7 +116,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </div>
 <!-- /.container-fluid -->
 
+<script>
+    $(document).ready(function() {
 
+        // export table
+        $(".export").click(function() {
+            var export_type = $(this).data('export-type');
+            $('#dataTable').tableExport({
+                type: export_type,
+                escape: 'false',
+                ignoreColumn: []
+            });
+        });
+
+    });
+</script>
 <?php
 
 include('footer.php');

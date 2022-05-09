@@ -120,6 +120,10 @@ $profile_id = $findUser['profile_id'];
                                                     <label for="">Residential Address</label>
                                                     <input type="text" name="address" class="form-control form-control-user" value="<?php echo $findClient['residentail_address'] ?>">
                                                 </div>
+                                                <div class="form-group">
+                                                    <label for="">Profile Picture</label>
+                                                    <input type="file" class="form-control form-control-user" name="image" placeholder="" required>
+                                                </div>
                                                 <!-- <script>
                                                     $(document).ready(function() {
                                                         $('#email').on("change blur click", function() {
@@ -167,6 +171,9 @@ $profile_id = $findUser['profile_id'];
                 <div class="card-body">
                     <!-- <form action=""> -->
                     <div class="row">
+                        <div style="margin: auto;">
+                            <img class="rounded-circle" alt="Profile Picture" style="height: 200px; width: 200px;" src="img/members/profile_pic/<?php echo $findClient['image'] ?>">
+                        </div>
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label for="">Username</label>

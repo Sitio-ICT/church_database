@@ -8,35 +8,73 @@ if (isset($_POST['first_name']) && isset($_POST['last_name'])) {
     // initiialize post data
 
     $profile_id = $_POST['profile_id'];
-    if($_POST['dow'] == ""){
+    if ($_POST['dow'] == "") {
         $dow = "00-00-0000";
-    }else{
+    } else {
         $dow = test_input($_POST['dow']);
     }
-    if($_POST['dob'] == ""){
+    if ($_POST['dob'] == "") {
         $dob = "00-00-0000";
-    }else{
+    } else {
         $dob = test_input($_POST['dob']);
     }
-    $userData = [
-        'first_name' => test_input($_POST['first_name']),
-        'middle_name' => test_input($_POST['middle_name']),
-        'last_name' => test_input($_POST['last_name']),
-        'maiden_name' => test_input($_POST['maiden_name']),
-        'sex' => test_input($_POST['sex']),
-        'marital_status' => test_input($_POST['marital_status']),
-        'd_o_wedding' => $dow,
-        'd_o_b' => $dow,
-        'state_of_origin' => test_input($_POST['state']),
-        'phone_no' => test_input($_POST['phone']),
-        'phone_no2' => test_input($_POST['phone2']),
-        'residentail_address' => test_input($_POST['address']),
-        'religion' => test_input($_POST['religion'])
-    ];
+    if (!empty($_FILES['image']['name'])) {
+
+        $name = $_FILES['image']['name'];
+        list($txt, $ext) = explode(".", $name);
+        $image_name = time() . "." . $ext;
+        $tmp = $_FILES['image']['tmp_name'];
+        $uploaded_at = date('Y-m-d H:i:s');
+
+        $valid_extensions = array("jpg", "jpeg", "png", "gif");
+
+        if (in_array(strtolower($ext), $valid_extensions)) {
+            if (copy($tmp, '../../../img/members/profile_pic/' . $image_name)) {
+                $imageData = [
+                    'profile_id' => $profile_id,
+                    'image' => $image_name
+                ];
+                $userData = [
+                    'first_name' => test_input($_POST['first_name']),
+                    'middle_name' => test_input($_POST['middle_name']),
+                    'last_name' => test_input($_POST['last_name']),
+                    'maiden_name' => test_input($_POST['maiden_name']),
+                    'sex' => test_input($_POST['sex']),
+                    'marital_status' => test_input($_POST['marital_status']),
+                    'd_o_wedding' => $dow,
+                    'd_o_b' => $dow,
+                    'state_of_origin' => test_input($_POST['state']),
+                    'phone_no' => test_input($_POST['phone']),
+                    'phone_no2' => test_input($_POST['phone2']),
+                    'residentail_address' => test_input($_POST['address']),
+                    'religion' => test_input($_POST['religion']),
+                    'image' => $image_name
+                ];
+            }
+        }
+    } else {
+        $userData = [
+            'first_name' => test_input($_POST['first_name']),
+            'middle_name' => test_input($_POST['middle_name']),
+            'last_name' => test_input($_POST['last_name']),
+            'maiden_name' => test_input($_POST['maiden_name']),
+            'sex' => test_input($_POST['sex']),
+            'marital_status' => test_input($_POST['marital_status']),
+            'd_o_wedding' => $dow,
+            'd_o_b' => $dow,
+            'state_of_origin' => test_input($_POST['state']),
+            'phone_no' => test_input($_POST['phone']),
+            'phone_no2' => test_input($_POST['phone2']),
+            'residentail_address' => test_input($_POST['address']),
+            'religion' => test_input($_POST['religion']),
+        ];
+    }
+
 
     $updateUser =  update('profile', $profile_id, 'id', $userData);
     // dd($updateUser);
     if ($updateUser) {
+
         // Send email to user with the token in a link they can click on
         $to = $_POST['email'];
         $subject = "Profile Update | Holy Family";
@@ -61,7 +99,7 @@ if (isset($_POST['first_name']) && isset($_POST['last_name'])) {
         echo header("Location: ../../../client_view.php?view=$clientId&message1=$randms");
         exit();
     }
-}else{
+} else {
     $_SESSION["feedback"] = "Fill in all required fields";
     echo header("Location: ../../../client_view.php?view=$clientId&message1=$randms");
     exit();

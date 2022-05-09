@@ -7,7 +7,8 @@ $transaction_id = generateRandomString(15);
 
 if (isset($_POST['amount']) && isset($_POST['member']) && isset($_POST['payment_type'])) {
     $amount = floatval(preg_replace('/[^\d.]/', '', $_POST['amount']));
-    $description = $_POST['description'];
+    $profile_id = $_POST['member'];
+    $description = test_input($_POST['description']);
     if ($_POST['payment_type'] == "Subscription") {
         $storeSubcription = subscribe($_POST['member'], $_POST['payment_type'], $amount, $_POST['subscriptionModel'], $today);
         if ($storeSubcription['status'] == "success") {
