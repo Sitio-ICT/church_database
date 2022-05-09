@@ -68,6 +68,36 @@ include('header.php');
             </div>
         </div>
 
+        <div class="col-lg-6">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Change Profile Picture</h6>
+                </div>
+                <div class="card-body">
+                    <form class="user" method="POST" enctype="multipart/form-data" action="functions/people/users/update_profile_pic.php">
+                        <input type="text" value="<?php echo $profile_id ?>" name="profile_id" hidden>
+                        <div class="form-group">
+                            <input type="file" class="form-control form-control-user" name="image" placeholder="" required>
+                        </div>
+
+                        <button type="reset" class="btn btn-danger btn-icon-split">
+                            <span class="icon text-white-50">
+                                <i class="fas fa-flag"></i>
+                            </span>
+                            <span class="text">Reset</span>
+                        </button>
+                        <button type="submit" class="btn btn-success btn-icon-split">
+                            <span class="icon text-white-50">
+                                <i class="fas fa-check"></i>
+                            </span>
+                            <span class="text">Submit</span>
+                        </button>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
     </div>
 
 </div>
