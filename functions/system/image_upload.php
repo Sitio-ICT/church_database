@@ -15,9 +15,9 @@ if (isset($_POST)) {
         $tmp = $_FILES['image']['tmp_name'];
         $uploaded_at = date('Y-m-d H:i:s');
 
-        $valid_extensions = array("jpg", "jpeg", "png", "gif");
+        $imageFileType = strtolower(pathinfo($name, PATHINFO_EXTENSION));
 
-        if (in_array(strtolower($ext), $valid_extensions)) {
+        if ($imageFileType == "jpg" or $imageFileType == "png" or $imageFileType == "jpeg" or $imageFileType == "JPEG") {
             if (copy($tmp, '../../uploads/' . $image_name)) {
                 $imageData = [
                     'profile_id' => $profile_id,

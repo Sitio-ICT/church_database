@@ -7,9 +7,9 @@ if ($_POST['identifier'] != "") {
 
     $input = $_POST['identifier'];
     $condition2 = [
-        'first_name' => $input,
-        'last_name' => $input,
-        'middle_name' => $input,
+        // 'first_name' => $input,
+        // 'last_name' => $input,
+        // 'middle_name' => $input,
         'registration_no' => $input
     ]; 
     $findMember = findMemeberLike($input);

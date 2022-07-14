@@ -29,6 +29,7 @@ if (isset($_POST['first_name']) && isset($_POST['last_name'])) {
         'd_o_wedding' => $dow,
         'd_o_b' => $dow,
         'state_of_origin' => test_input($_POST['state']),
+        'lga' => test_input($_POST['lga']),
         'phone_no' => test_input($_POST['phone']),
         'phone_no2' => test_input($_POST['phone2']),
         'residentail_address' => test_input($_POST['address']),

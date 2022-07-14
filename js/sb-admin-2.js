@@ -14,6 +14,7 @@
   $(window).resize(function() {
     if ($(window).width() < 768) {
       $('.sidebar .collapse').collapse('hide');
+      jQuery(".collapse.navbar-collapse.in").removeClass("in");
     };
     
     // Toggle the side navigation when window is resized below 480px
@@ -21,6 +22,7 @@
       $("body").addClass("sidebar-toggled");
       $(".sidebar").addClass("toggled");
       $('.sidebar .collapse').collapse('hide');
+      jQuery(".collapse.navbar-collapse.in").removeClass("in");
     };
   });
 

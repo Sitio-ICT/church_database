@@ -107,6 +107,10 @@ $profile_id = $findUser['profile_id'];
                                                     <label for="">State of origin</label>
                                                     <input type="text" name="state" class="form-control form-control-user" value="<?php echo $findClient['state_of_origin'] ?>">
                                                 </div>
+                                                <div class="form-group">
+                                                    <label for="">LGA</label>
+                                                    <input type="text" name="lga" class="form-control form-control-user" value="<?php echo $findClient['state_of_origin'] ?>">
+                                                </div>
                                                 <div id="emailed"></div>
                                                 <div class="form-group">
                                                     <label for="">Phone</label>
@@ -120,10 +124,10 @@ $profile_id = $findUser['profile_id'];
                                                     <label for="">Residential Address</label>
                                                     <input type="text" name="address" class="form-control form-control-user" value="<?php echo $findClient['residentail_address'] ?>">
                                                 </div>
-                                                <div class="form-group">
+                                                <!-- <div class="form-group">
                                                     <label for="">Profile Picture</label>
                                                     <input type="file" class="form-control form-control-user" name="image" placeholder="" required>
-                                                </div>
+                                                </div> -->
                                                 <!-- <script>
                                                     $(document).ready(function() {
                                                         $('#email').on("change blur click", function() {
@@ -170,10 +174,12 @@ $profile_id = $findUser['profile_id'];
                 </div>
                 <div class="card-body">
                     <!-- <form action=""> -->
+                    <div style="margin: auto; height: 203px; width: 203px;">
+
+                        <img class="rounded-circle" alt="Profile Picture" style="height: 200px; width: 200px;" src="img/members/profile_pic/<?php echo $findClient['image'] ?>">
+                    </div>
                     <div class="row">
-                        <div style="margin: auto;">
-                            <img class="rounded-circle" alt="Profile Picture" style="height: 200px; width: 200px;" src="img/members/profile_pic/<?php echo $findClient['image'] ?>">
-                        </div>
+
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label for="">Username</label>
@@ -205,6 +211,10 @@ $profile_id = $findUser['profile_id'];
                             <div class="form-group">
                                 <label for="">State of origin</label>
                                 <input type="text" class="form-control form-control-user" value="<?php echo $findClient['state_of_origin'] ?>" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="">LGA</label>
+                                <input type="text" class="form-control form-control-user" value="<?php echo $findClient['lga'] ?>" readonly>
                             </div>
                             <div class="form-group">
                                 <label for="">Registration No</label>

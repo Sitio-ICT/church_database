@@ -1,3 +1,6 @@
+ALTER TABLE `profile` ADD `lga` VARCHAR(25) NOT NULL AFTER `state_of_origin`;
+-- 22nd May^ 
+
 ALTER TABLE `mass_booking` ADD `day_booked` DATE NOT NULL DEFAULT CURRENT_TIMESTAMP AFTER `status`;
 -- 9th May^
 

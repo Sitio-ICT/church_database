@@ -1,4 +1,5 @@
 <?php
+
 include("../../methods.php");
 session_start();
 $randms = generateRandomString(7);
@@ -7,7 +8,7 @@ $profile_id = $_SESSION['profile_id'];
 if (isset($_POST)) {
     // initiialize post data
 
-    
+
     if (!empty($_FILES['image']['name'])) {
 
         $name = $_FILES['image']['name'];
@@ -15,16 +16,29 @@ if (isset($_POST)) {
         $image_name = time() . "." . $ext;
         $tmp = $_FILES['image']['tmp_name'];
         $uploaded_at = date('Y-m-d H:i:s');
+        $imageFileType = strtolower(pathinfo($name, PATHINFO_EXTENSION));
+        // dd($imageFileType);
 
-        $valid_extensions = array("jpg", "jpeg", "png", "gif");
+        // $valid_extensions = getimagesize("jpg", "jpeg", "png");
 
-        if (in_array(strtolower($ext), $valid_extensions)) {
-            if (copy($tmp, '../../../img/members/profile_pic/' . $image_name)) {
-                
-                $userData = [
-                    'image' => $image_name
-                ];
+        if ($imageFileType == "jpg" or $imageFileType == "png" or $imageFileType == "jpeg" or $imageFileType == "JPEG") {
+            if ($_FILES["image"]["size"] < 2000000) {
+
+                if (copy($tmp, '../../../img/members/profile_pic/' . $image_name)) {
+
+                    $userData = [
+                        'image' => $image_name
+                    ];
+                }
+            } else {
+                $_SESSION["feedback"] = "Sorry, your file is too large.";
+                echo header("Location: ../../../profile.php?message1=$randms");
+                exit();
             }
+        } else {
+            $_SESSION["feedback"] = "Sorry Extention not Valid";
+            echo header("Location: ../../../profile.php?message1=$randms");
+            exit();
         }
     } else {
         $error = mysqli_error($connection); //checking for errors

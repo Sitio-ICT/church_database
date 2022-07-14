@@ -10308,7 +10308,9 @@ a:focus {
 }
 
 .topbar.navbar-light .navbar-nav .nav-item .nav-link {
-  color: #d1d3e2;
+  /* color: #d1d3e2; */
+
+  color: #4e73df;
 }
 
 .topbar.navbar-light .navbar-nav .nav-item .nav-link:hover {
@@ -10861,13 +10863,13 @@ a:focus {
 }
 
 .bg-login-image {
-  background: url("../img/holy_family.png");
+  background: url("../img/holy_family.jpeg");
   background-position: center;
   background-size: cover;
 }
 
 .bg-register-image {
-  background: url("../img/smoke-892679_1280.jpg");
+  background: url("../img/smoke.jpg");
   background-position: center;
   background-size: cover;
 }
