@@ -5,6 +5,7 @@ $randms = generateRandomString(5);
 
 $findUser = findUser($profile_id);
 $findClient = findProfile($findUser['profile_id']);
+$sumTransactions = sumAmount('amount', 'payment', ['profile_id' => $profile_id]);
 
 ?>
 
@@ -21,9 +22,10 @@ $findClient = findProfile($findUser['profile_id']);
                 <div class="card-header py-3">
                     <div style="float: left;">
                         <h6 class="m-0 font-weight-bold text-primary">Donations and Tithes</h6>
+                        <b>Total: <span id="total"><?php echo $sumTransactions; ?></span></b> 
                     </div>
                     <div style="float: right;">
-                        <b>Total: <span id="total"></span></b> 
+                        <b><span id="total"></span></b> 
                         <!-- ||
                         <a href="#" class="btn btn-info btn-icon-split export" data-export-type="excel">
                             <span class="icon text-white-50">
@@ -144,7 +146,7 @@ $findClient = findProfile($findUser['profile_id']);
                                     <th>Amount</th>
                                     <th>Transaction Date</th>
                                     <th>Reference Id</th>
-                                    <th>Description</th>
+                                    <th>Purpose</th>
                                 </tr>
                                 <tr id="filterrow">
                                     <th>Member</th>
@@ -152,7 +154,7 @@ $findClient = findProfile($findUser['profile_id']);
                                     <th>Amount</th>
                                     <th>Transaction Date</th>
                                     <th>Reference Id</th>
-                                    <th>Description</th>
+                                    <th>Purpose</th>
                                 </tr>
                             </thead>
                             <tfoot>
