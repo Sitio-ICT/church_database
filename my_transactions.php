@@ -21,7 +21,6 @@ $sumTransactions = sumAmount('amount', 'payment', ['profile_id' => $profile_id])
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
                     <div style="float: left;">
-                        <h6 class="m-0 font-weight-bold text-primary">Donations and Tithes</h6>
                         <b>Total: <span id="total"><?php echo $sumTransactions; ?></span></b> 
                     </div>
                     <div style="float: right;">
