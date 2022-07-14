@@ -53,12 +53,12 @@ if (isset($_POST['profile_id']) && isset($_POST['member'])) {
         $headers .= "Content-type: text/html\r\n";
         $mailed = mail($to, $subject, $msg, $headers);
 
-        $_SESSION["feedback"] = "Your account was Successfuly created";
+        $_SESSION["feedback"] = "Relationship has been added successfully!!";
         echo header("Location: ../../../client_view.php?view=$clientId&message0=$randms");
         exit();
     } else {
         $error = mysqli_error($connection); //checking for errors
-        $_SESSION["feedback"] = "Sorry could not Update User! - $error";
+        $_SESSION["feedback"] = "Sorry could not add relationship! - $error";
         echo header("Location: ../../../client_view.php?view=$clientId&message1=$randms");
         exit();
     }

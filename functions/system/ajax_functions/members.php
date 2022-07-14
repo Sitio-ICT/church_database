@@ -17,8 +17,11 @@ if ($_POST['identifier'] != "") {
     $profile_id = $findMember['id'];
 ?>
     <div class="form-group">
-        <input type="text" class="form-control" value="<?php echo $findMember['first_name'] . " " . $findMember['middle_name'] . " " . $findMember['last_name'] ?>" required readonly>
-        <input type="text" id="profile" name="member" value="<?php echo $profile_id ?>" required readonly hidden>
+        <!-- <input type="text" class="form-control" value="<?php //echo $findMember['first_name'] . " " . $findMember['middle_name'] . " " . $findMember['last_name'] ?>" required readonly> -->
+        <select name="member" class="form-control">
+            <?php echo "<option value='".$profile_id."'>".$findMember['first_name'] . " " . $findMember['middle_name'] . " " . $findMember['last_name']."</option>"?>
+        </select>
+       <!--  <input type="text" id="profile" name="member" value="<?php //echo $profile_id ?>" required readonly hidden> -->
     </div>
 <?php
 } else {

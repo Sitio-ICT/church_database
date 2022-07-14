@@ -238,7 +238,7 @@ $profile_id = $findUser['profile_id'];
                             <input type="text" class="form-control form-control-user" value="<?php echo $findUser['status'] ?>" readonly>
                         </div>
                         <?php
-                        if ($findUser['status'] == "ACTIVE") {
+                        if (($findUser['status'] == "ACTIVE") && ($profile_id != $_SESSION['profile_id'])) {
                         ?>
                             <a href="functions/people/customers/ban.php?ban=<?php echo $clientId ?>" class="btn btn-danger ">Block User</a>
                         <?php
@@ -624,7 +624,7 @@ $profile_id = $findUser['profile_id'];
                                     <th>Amount</th>
                                     <th>Transaction Date</th>
                                     <th>Reference Id</th>
-                                    <th>Description</th>
+                                    <th>Purpose</th>
                                 </tr>
                             </thead>
                             <tfoot>
@@ -635,7 +635,7 @@ $profile_id = $findUser['profile_id'];
                                     <th>Amount</th>
                                     <th>Transaction Date</th>
                                     <th>Reference Id</th>
-                                    <th>Description</th>
+                                    <th>Purpose</th>
                                 </tr>
 
                             </tfoot>
