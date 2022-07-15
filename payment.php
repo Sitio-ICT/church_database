@@ -29,7 +29,11 @@ $findClient = findProfile($findUser['profile_id']);
                             <input type="number" class="form-control form-control-user" id="amount" name="amount" placeholder="Amount(NGN)...." required>
                         </div>
                         <div class="form-group">
+                        <textarea name="purpose" id="purpose" class="form-control" placeholder="Purpose of payment"></textarea>
+                        </div>
+                        <div class="form-group">
                             <select name="type" id="payment_type" class="form-control">
+                                <option value="Donation" selected>Transaction Type</option>
                                 <option value="Donation">Donation</option>
                                 <option value="Thanksgivivng">Thansksgiving</option>
                                 <option value="SMA">SMA - Mission Support</option>
@@ -51,6 +55,7 @@ $findClient = findProfile($findUser['profile_id']);
                             let handler = PaystackPop.setup({
                                 key: 'pk_test_381f76fca3b0f850654e352c0424f2a6d78466e2', // Replace with your public key
                                 email: document.getElementById("email").value,
+                                purpose: document.getElementById("purpose").value,
                                 payment_type: document.getElementById("payment_type").value,
                                 profile_id: document.getElementById("profile_id").value,
                                 amount: 100 * document.getElementById("amount").value,
@@ -84,6 +89,7 @@ $findClient = findProfile($findUser['profile_id']);
                         function ajaxCall2() {
 
                             var payment_type = document.getElementById("payment_type").value;
+                            var purpose = document.getElementById("purpose").value;
                             var profile_id = document.getElementById("profile_id").value;
                             var amount = 100 * document.getElementById("amount").value;
                             $.ajax({
@@ -92,7 +98,8 @@ $findClient = findProfile($findUser['profile_id']);
                                 data: {
                                     amount: amount,
                                     payment_type: payment_type,
-                                    profile_id: profile_id
+                                    profile_id: profile_id,
+                                    purpose: purpose
                                 },
                                 success: function(response2) {
                                     // the transaction status is in response.data.status
