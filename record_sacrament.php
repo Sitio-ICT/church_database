@@ -22,7 +22,7 @@ include('header.php');
 
                         <div class="form-group">
                             <label for="">Member</label>
-                            <input type="text" name="indetifier" id="identifier" class="form-control">
+                            <input type="text" name="member" value="<?php echo $profile_id ?>" required readonly>
                         </div>
                         <div id="member"></div>
 

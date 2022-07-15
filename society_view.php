@@ -269,7 +269,6 @@ $findOrganisation = findOrganization($_GET['view']);
                                                     <label for="">Member</label>
                                                     <input type="text" name="member" value="<?php echo $profile_id ?>" required readonly>
                                                 </div>
-                                                <div id="member"></div>
                                                 <div class="form-group">
                                                     <label for="">Date Joined</label>
                                                     <input type="date" name="date_joined" class="form-control" max="<?php echo date("Y-m-d"); ?>" required>
