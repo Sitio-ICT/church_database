@@ -17,15 +17,6 @@ $findOrganisation = findOrganization($_GET['view']);
         <div class="col-lg-12">
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
-<<<<<<< Updated upstream
-                    <div style="float:left">
-                        <h6 class="m-0 font-weight-bold text-primary">Organization Info</h6>
-                    </div>
-                    <div style="float:right">
-                        <?php
-                        if ($user_type == "admin") {
-                        ?>
-=======
                     <div style="float: left;">
                         <h6 class="m-0 font-weight-bold text-primary">Organization Info</h6>
                     </div>
@@ -33,19 +24,15 @@ $findOrganisation = findOrganization($_GET['view']);
                     <?php
                     if ($user_type == "admin") {
                     ?>
->>>>>>> Stashed changes
                             <a href="#" class="btn btn-info btn-icon-split" data-toggle="modal" data-target="#bookLoan">
                                 <span class="icon text-white-50">
                                     <i class="fas fa-info-circle"></i>
                                 </span>
                                 <span class="text">Edit</span>
                             </a>
-<<<<<<< Updated upstream
-=======
                     <?php
                     }
                     ?>
->>>>>>> Stashed changes
                             <!-- Modal -->
                             <form action="functions/operations/edit_society.php" method="post" enctype="multipart/form-data" autocomplete="off">
                                 <div class="modal fade" id="bookLoan" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -58,20 +45,6 @@ $findOrganisation = findOrganization($_GET['view']);
                                                 </button>
                                             </div>
                                             <div class="modal-body">
-<<<<<<< Updated upstream
-                                                <input type="text" hidden name="id" value="<?php echo $_GET['view'] ?>">
-                                                <div class="form-group">
-                                                    <label for="">Organisation/Society Name</label>
-                                                    <input type="text" name="org_name" class="form-control" value="<?php echo $findOrganisation['org_name'] ?>" required>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="">Description</label>
-                                                    <input type="text" name="description" value="<?php echo $findOrganisation['description'] ?>" class="form-control">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="">Society/Organization Type</label>
-                                                    <input type="text" name="org_type" class="form-control" value="<?php echo $findOrganisation['type'] ?>" required placeholder="Pious society, Committee etc....">
-=======
                                                 <input type="text" hidden name="id" value="3">
                                                 <div class="form-group">
                                                     <label for="">Organisation/Society Name</label>
@@ -84,16 +57,11 @@ $findOrganisation = findOrganization($_GET['view']);
                                                 <div class="form-group">
                                                     <label for="">Society/Organization Type</label>
                                                     <input type="text" name="org_type" class="form-control" value="Organization" required placeholder="Pious society, Committee etc....">
->>>>>>> Stashed changes
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="">Meeting Days</label>
                                                     <select name="meeting_days" class="form-control" required>
-<<<<<<< Updated upstream
-                                                        <option value="<?php echo $findOrganisation['meeting_days'] ?>"><?php echo $findOrganisation['meeting_days'] ?></option>
-=======
                                                         <option value="Sunday">Sunday</option>
->>>>>>> Stashed changes
                                                         <option value="Sunday">Sunday</option>
                                                         <option value="Monday">Monday</option>
                                                         <option value="Tuesday">Tuesday</option>
@@ -107,11 +75,7 @@ $findOrganisation = findOrganization($_GET['view']);
                                                 <div class="form-group">
                                                     <label for="">Meeting Frequency</label>
                                                     <select name="re_occurence" class="form-control" required>
-<<<<<<< Updated upstream
-                                                        <option value="<?php echo $findOrganisation['re_occurance'] ?>"><?php echo $findOrganisation['re_occurance'] ?></option>
-=======
                                                         <option value="Every">Every</option>
->>>>>>> Stashed changes
                                                         <option value="Every">Every</option>
                                                         <option value="First">First</option>
                                                         <option value="Second">Second</option>
@@ -121,11 +85,7 @@ $findOrganisation = findOrganization($_GET['view']);
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="">Meeting Time</label>
-<<<<<<< Updated upstream
-                                                    <input type="time" name="time" class="form-control" value="<?php echo $findOrganisation['meeting_time'] ?>" required>
-=======
                                                     <input type="time" name="time" class="form-control" value="12:00" required>
->>>>>>> Stashed changes
                                                 </div>
 
                                             </div>
@@ -139,13 +99,8 @@ $findOrganisation = findOrganization($_GET['view']);
                                 </div>
                             </form>
                             <!-- /modal ends here -->
-<<<<<<< Updated upstream
-                        <?php } ?>
-                    </div>
-=======
                                             </div>
 
->>>>>>> Stashed changes
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -267,7 +222,7 @@ $findOrganisation = findOrganization($_GET['view']);
                                                 <input type="text" value="<?php echo $_GET['view'] ?>" name="organization" hidden>
                                                 <div class="form-group">
                                                     <label for="">Member</label>
-                                                    <input type="text" name="member" value="<?php echo $profile_id ?>" required readonly>
+                                                    <input type="text" name="member" value="<?php echo $profile_id ?>" placeholder="<?php echo $findProfile['id'] ?>" required readonly>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="">Date Joined</label>

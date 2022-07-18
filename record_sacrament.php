@@ -22,7 +22,7 @@ include('header.php');
 
                         <div class="form-group">
                             <label for="">Member</label>
-                            <input type="text" name="member" value="<?php echo $profile_id ?>" required readonly>
+                            <input type="text" name="member" value="<?php echo $profile_id ?>" placeholder="<?php echo $findProfile['id'] ?>" required readonly>
                         </div>
                         <div id="member"></div>
 
